@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Card, Table, Space, Tag, Button, Modal } from "antd";
+import { Card, Table, Space, Tag, Button, Modal, Checkbox } from "antd";
 import SearchBar from "./SearchBar";
 import { useGetAllContactsQuery } from "../../redux/features/contacts/contactsApi";
 import { FaPrint } from "react-icons/fa6";
@@ -145,7 +145,20 @@ const ContactsView = () => {
         width={"auto"}
         centered
       >
+        <Card style={{marginBottom:".5rem", display:"flex", flexWrap:'wrap', gap:"1rem"}}>
+        <Checkbox >Name</Checkbox>
+        <Checkbox >Designation</Checkbox>
+        <Checkbox >Mobile</Checkbox>
+        <Checkbox >Email</Checkbox>
+        <Checkbox >Address</Checkbox>
+        <Checkbox >Tag</Checkbox>
+        <Checkbox >Union/Pourosova</Checkbox>
+        <Checkbox >Upazila</Checkbox>
+        <Checkbox >District</Checkbox>
+        <Checkbox >Division</Checkbox>
+        </Card>
         <div className="print-container">
+        
           {Array.from({ length: totalPages }, (_, index) => (
             <div key={index} className="print-page" ref={componentRef}>
               {contacts.slice(index * 4, (index + 1) * 4).map((user, i) => (
