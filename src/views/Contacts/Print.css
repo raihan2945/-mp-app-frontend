@@ -1,0 +1,27 @@
+@page {
+  size: 50mm 150mm;
+  margin: 1cm;
+}
+
+.print-container {
+  font-size: 10pt; /* Adjust the font size as needed */
+}
+
+.print-page {
+  page-break-after: always;
+  margin-bottom: 1cm; /* Add margin between pages */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 9in;
+  height: 11in;
+  /* height: 842px; */
+  border: 1px solid #dfdede;
+  height: 100%;
+  padding: 10px;
+  gap: 1rem;
+}
+
+.print-item {
+  border: 1px solid #dfdede;
+  padding: 5px;
+}
