@@ -21,7 +21,7 @@ const ContactsView = () => {
 
   const { data: getContacts, refetch } = useGetAllContactsQuery(searchItems);
 
-  const totalPages = Math.ceil(Array.isArray(contacts) && contacts.length / 4);
+  const totalPages = Math.ceil(Array.isArray(contacts) && contacts.length / 8);
 
   const columns = [
     {
@@ -145,25 +145,31 @@ const ContactsView = () => {
         width={"auto"}
         centered
       >
-        <Card style={{marginBottom:".5rem", display:"flex", flexWrap:'wrap', gap:"1rem"}}>
-        <Checkbox >Name</Checkbox>
-        <Checkbox >Designation</Checkbox>
-        <Checkbox >Mobile</Checkbox>
-        <Checkbox >Email</Checkbox>
-        <Checkbox >Address</Checkbox>
-        <Checkbox >Tag</Checkbox>
-        <Checkbox >Union/Pourosova</Checkbox>
-        <Checkbox >Upazila</Checkbox>
-        <Checkbox >District</Checkbox>
-        <Checkbox >Division</Checkbox>
-        </Card>
+        {/* <Card
+          style={{
+            marginBottom: ".5rem",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "1rem",
+          }}
+        >
+          <Checkbox>Name</Checkbox>
+          <Checkbox>Designation</Checkbox>
+          <Checkbox>Mobile</Checkbox>
+          <Checkbox>Email</Checkbox>
+          <Checkbox>Address</Checkbox>
+          <Checkbox>Tag</Checkbox>
+          <Checkbox>Union/Pourosova</Checkbox>
+          <Checkbox>Upazila</Checkbox>
+          <Checkbox>District</Checkbox>
+          <Checkbox>Division</Checkbox>
+        </Card> */}
         <div className="print-container">
-        
           {Array.from({ length: totalPages }, (_, index) => (
             <div key={index} className="print-page" ref={componentRef}>
-              {contacts.slice(index * 4, (index + 1) * 4).map((user, i) => (
-                <div  className="print-item" key={i}>
-                  Name: {user?.name}, Age: {user?.age}
+              {contacts.slice(index * 8, (index + 1) * 8).map((user, i) => (
+                <div className="print-item" key={i}>
+                  <p style={{ fontSize: "1.2rem" }}>{user?.first_name}</p>
                 </div>
               ))}
             </div>

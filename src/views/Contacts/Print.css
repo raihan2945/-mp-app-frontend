@@ -1,27 +1,51 @@
-@page {
-  size: 50mm 150mm;
-  margin: 1cm;
+@media print {
+  .print-page {
+    margin: 0;
+    border: initial;
+    border-radius: initial;
+    width: initial;
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+    page-break-after: always;
+  }
+ 
 }
 
-.print-container {
-  font-size: 10pt; /* Adjust the font size as needed */
+@page {
+  /* size: 21cm 29.7cm !important; */
 }
 
 .print-page {
-  page-break-after: always;
-  margin-bottom: 1cm; /* Add margin between pages */
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: 9in;
-  height: 11in;
-  /* height: 842px; */
-  border: 1px solid #dfdede;
-  height: 100%;
-  padding: 10px;
-  gap: 1rem;
+  width: 155 !important;
+  border: 1px solid #f2f2f2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* padding: 0.1cm; */
+  /* align-items: baseline; */
+  /* gap: 0.2cm; */
+  /* margin: 0; */
+  border: 1px solid black;
 }
 
 .print-item {
   border: 1px solid #dfdede;
-  padding: 5px;
+  padding: 10px;
+  width: 95mm !important;
+  height: 100mm;
+  font-family: "Noto Serif Bengali", serif;
+  font-weight: 600;
+  box-sizing: border-box;
+  margin-top: 0.13cm;
+  margin-left: 0.13cm;
+}
+
+.print-item::after {
+  /* content: "";
+  flex-grow: 1; */
+}
+
+.print-page:last-child {
+  page-break-after: auto;
 }
