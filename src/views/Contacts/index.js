@@ -17,6 +17,15 @@ const ContactsView = () => {
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    pageStyle: `@page {
+      size: 210mm 297mm;
+      margin: 0;
+    }
+    @media print {
+      body {
+        margin: 0;
+      }
+    }`,
   });
 
   const { data: getContacts, refetch } = useGetAllContactsQuery(searchItems);
@@ -164,16 +173,19 @@ const ContactsView = () => {
           <Checkbox>District</Checkbox>
           <Checkbox>Division</Checkbox>
         </Card> */}
-        <div className="print-container">
+        <div className="print-container" ref={componentRef}>
           {Array.from({ length: totalPages }, (_, index) => (
             <div key={index} className="print-page" ref={componentRef}>
-              {contacts.slice(index * 8, (index + 1) * 8).map((user, i) => (
-                <div className="print-item" key={i}>
-                  <p style={{ fontSize: "1.2rem" }}>{user?.first_name}</p>
-                </div>
-              ))}
+              <div className="print-content">
+                {contacts.slice(index * 8, (index + 1) * 8).map((user, i) => (
+                  <div className="print-item" key={i}>
+                    <p style={{ fontSize: "1.2rem" }}>{user?.first_name}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
+        
         </div>
 
         <Button
