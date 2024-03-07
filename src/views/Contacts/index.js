@@ -19,6 +19,31 @@ Font.register({
   src: banlgaFont,
 });
 
+var finalEnglishToBanglaNumber = {
+  0: "০",
+  1: "১",
+  2: "২",
+  3: "৩",
+  4: "৪",
+  5: "৫",
+  6: "৬",
+  7: "৭",
+  8: "৮",
+  9: "৯",
+};
+
+String.prototype.getDigitBanglaFromEnglish = function () {
+  var retStr = this;
+  for (var x in finalEnglishToBanglaNumber) {
+     retStr = retStr.replace(
+        new RegExp(x, "g"),
+        finalEnglishToBanglaNumber[x]
+     );
+  }
+  return retStr;
+};
+
+
 // Your custom component with a <div> and CSS styles
 const CustomContent = ({ data, checkingContent }) => (
   <View style={customStyles.container}>
@@ -34,7 +59,7 @@ const CustomContent = ({ data, checkingContent }) => (
       style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
     ></View>
     <Text style={customStyles.paragraph}>
-      {checkingContent.mobile && data?.mobile && `0${data?.mobile} `}
+      {checkingContent.mobile && data?.mobile && `0${data.mobile}`.getDigitBanglaFromEnglish()}
     </Text>
     <Text style={customStyles.paragraph}>
       {checkingContent?.email && data?.email && `${data?.email} `}
