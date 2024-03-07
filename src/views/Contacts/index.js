@@ -35,14 +35,10 @@ var finalEnglishToBanglaNumber = {
 String.prototype.getDigitBanglaFromEnglish = function () {
   var retStr = this;
   for (var x in finalEnglishToBanglaNumber) {
-     retStr = retStr.replace(
-        new RegExp(x, "g"),
-        finalEnglishToBanglaNumber[x]
-     );
+    retStr = retStr.replace(new RegExp(x, "g"), finalEnglishToBanglaNumber[x]);
   }
   return retStr;
 };
-
 
 // Your custom component with a <div> and CSS styles
 const CustomContent = ({ data, checkingContent }) => (
@@ -55,11 +51,15 @@ const CustomContent = ({ data, checkingContent }) => (
     <Text style={customStyles.heading}>
       {checkingContent?.last_name && data?.last_name && `${data?.last_name} `}
     </Text>
-    <View
-      style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
-    ></View>
+    {data?.mobile && checkingContent?.mobile &&(
+      <View
+        style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
+      ></View>
+    )}
     <Text style={customStyles.paragraph}>
-      {checkingContent.mobile && data?.mobile && `0${data.mobile}`.getDigitBanglaFromEnglish()}
+      {checkingContent.mobile &&
+        data?.mobile &&
+        `0${data.mobile}`.getDigitBanglaFromEnglish()}
     </Text>
     <Text style={customStyles.paragraph}>
       {checkingContent?.email && data?.email && `${data?.email} `}
@@ -89,13 +89,6 @@ const CustomContent = ({ data, checkingContent }) => (
     </Text>
   </View>
 );
-
-// Component that will handle the printing
-const PrintComponent = ({ contentRef }) => {
-  return <div ref={contentRef} />;
-};
-
-// const totalPages = Math.ceil(Array.isArray(contacts) && contacts.length / 8);
 
 // PDF Document component with custom page size and multiple pages
 const PDFDocument = ({ dataArray, checkingContent }) => (
@@ -150,10 +143,10 @@ const ContactsView = () => {
     email: true,
     address: true,
     union: true,
-    upazila: false,
-    district: false,
-    division: false,
-    tag: false,
+    upazila: true,
+    district: true,
+    division: true,
+    tag: true,
   });
 
   const { data: getContacts, refetch } = useGetAllContactsQuery(searchItems);
