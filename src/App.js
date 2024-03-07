@@ -13,7 +13,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Main from "./components/layout/Main";
 
-// import './App.css'
+import './App.css'
 
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";

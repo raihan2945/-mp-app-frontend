@@ -19,7 +19,7 @@ const contactsApi = apiSlice.injectEndpoints({
           }
         });
 
-        console.log("Url is : ", url)
+        // console.log("Url is : ", url)
 
         return {
           url: url,

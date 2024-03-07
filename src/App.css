@@ -1,16 +1,31 @@
-body {
+/* body {
   margin: 0;
   padding: 0;
   background-color: #fafafa;
   font: 12pt "Tahoma";
-}
+} */
 
-@media print {
-  body {
-    transform: scale(1);
+/* @media all {
+  .page-break {
+    display: none;
   }
+} */
 
-  @page {
-    size: 21cm 29.7cm !important;
+/* @media print {
+  html, body {
+    height: initial !important;
+    overflow: initial !important;
+    -webkit-print-color-adjust: exact;
   }
-}
+} */
+
+/* @media print {
+  .page-break {
+    display: block;
+    page-break-before: auto;
+  }
+} */
+
+/* @page {
+  size: A4;
+} */
