@@ -19,8 +19,6 @@ const contactsApi = apiSlice.injectEndpoints({
           }
         });
 
-        // console.log("Url is : ", url)
-
         return {
           url: url,
           method: "GET",
@@ -31,6 +29,7 @@ const contactsApi = apiSlice.injectEndpoints({
       },
       providesTags: ["Contacts"],
     }),
+
     getAllTags: builder.query({
       query: (id) => {
         let url = `/api/v1/contacts/tags`;
@@ -44,20 +43,21 @@ const contactsApi = apiSlice.injectEndpoints({
       },
       providesTags: ["Contacts"],
     }),
+
     getContactDetails: builder.query({
       query: (id) => ({
-        url: `/api/v1/chemists/${id}`,
+        url: `/api/v1/contacts/${id}`,
         method: "GET",
         headers: {
           authorization: `Bearer ${token}`,
         },
       }),
-      invalidatesTags: ["Chemist"],
+      invalidatesTags: ["Contacts"],
     }),
-    updateContact: builder.mutation({
+    createContact: builder.mutation({
       query: ({ data }) => {
         return {
-          url: `/api/v1/chemists`,
+          url: `/api/v1/contacts`,
           method: "POST",
           body: data,
           headers: {
@@ -66,8 +66,23 @@ const contactsApi = apiSlice.injectEndpoints({
         };
       },
 
-      invalidatesTags: ["User"],
-      providesTags: ["User"],
+      invalidatesTags: ["Contacts"],
+      providesTags: ["Contacts"],
+    }),
+    updateContact: builder.mutation({
+      query: ({ data }) => {
+        return {
+          url: `/api/v1/contacts`,
+          method: "PUT",
+          body: data,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        };
+      },
+
+      invalidatesTags: ["Contacts"],
+      providesTags: ["Contacts"],
     }),
     deleteContact: builder.mutation({
       query: ({ data }) => {
@@ -81,12 +96,18 @@ const contactsApi = apiSlice.injectEndpoints({
         };
       },
 
-      invalidatesTags: ["User"],
-      providesTags: ["User"],
+      invalidatesTags: ["Contacts"],
+      providesTags: ["Contacts"],
     }),
   }),
   overrideExisting: true,
 });
 
-export const { useGetAllContactsQuery, useGetAllTagsQuery } = contactsApi;
+export const {
+  useGetAllContactsQuery,
+  useGetAllTagsQuery,
+  useCreateContactMutation,
+  useUpdateContactMutation,
+  useGetContactDetailsQuery,
+} = contactsApi;
 export default contactsApi;

@@ -2,8 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { Card, Table, Space, Tag, Button, Modal, Checkbox } from "antd";
 import SearchBar from "./SearchBar";
 import { useGetAllContactsQuery } from "../../redux/features/contacts/contactsApi";
+
+//icons
+import { IoMdAddCircle } from "react-icons/io";
 import { FaPrint } from "react-icons/fa6";
+
 import banlgaFont from "./fonts/Nikosh-Regular.ttf";
+
 import {
   Page,
   View,
@@ -13,6 +18,7 @@ import {
   Text,
   Font,
 } from "@react-pdf/renderer";
+import ContactForm from "./ContactForm";
 
 Font.register({
   family: "SolaimanLipi",
@@ -51,7 +57,7 @@ const CustomContent = ({ data, checkingContent }) => (
     <Text style={customStyles.heading}>
       {checkingContent?.last_name && data?.last_name && `${data?.last_name} `}
     </Text>
-    {data?.mobile && checkingContent?.mobile &&(
+    {data?.mobile && checkingContent?.mobile && (
       <View
         style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
       ></View>
@@ -135,6 +141,14 @@ const ContactsView = () => {
   const [searchItems, setSearchItems] = useState([]);
   const [isPrint, setPrint] = useState(null);
   const [contacts, setContacts] = useState([]);
+
+  const [createContact, setCreateContact] = useState(false);
+  const [editContact, setEditContact] = useState(null);
+
+  const cancelContactFormModal = () => {
+    setCreateContact(false);
+    setEditContact(false);
+  };
 
   const [checkingContent, setCheckingContent] = useState({
     first_name: true,
@@ -220,16 +234,27 @@ const ContactsView = () => {
       dataIndex: "upazila",
       key: "upazila",
     },
-    // {
-    //   title: "Action",
-    //   key: "action",
-    //   render: (_, record) => (
-    //     <Space size="middle">
-    //       <a>Edit</a>
-    //       <a>Delete</a>
-    //     </Space>
-    //   ),
-    // },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Button
+            onClick={() => setEditContact(record)}
+            type="primary"
+            size="small"
+          >
+            Edit
+          </Button>
+          <Button
+            style={{ border: "none", boxShadow: "none", color: "red" }}
+            size="small"
+          >
+            Delete
+          </Button>
+        </div>
+      ),
+    },
   ];
 
   useEffect(() => {
@@ -243,7 +268,25 @@ const ContactsView = () => {
   return (
     <div>
       <SearchBar searchItems={searchItems} setSearchItems={setSearchItems} />
-      <div style={{ textAlign: "end", marginTop: ".5rem" }}>
+      <div
+        style={{
+          marginTop: ".5rem",
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: "1rem",
+        }}
+      >
+        <Button
+          onClick={() => {
+            setCreateContact(true);
+          }}
+          type="primary"
+          size="large"
+          style={{ backgroundColor: "#EF9B0F", border: "none" }}
+        >
+          <IoMdAddCircle size={18} />
+          Create New
+        </Button>
         <Button
           onClick={() => {
             setPrint(true);
@@ -261,7 +304,7 @@ const ContactsView = () => {
           size="small"
           columns={columns}
           dataSource={contacts}
-          scroll={true}
+          scroll={{ x: true }}
         />
       </div>
 
@@ -479,6 +522,19 @@ const ContactsView = () => {
         <PDFViewerComponent
           dataArray={contacts}
           checkingContent={checkingContent}
+        />
+      </Modal>
+
+      <Modal
+        open={createContact || editContact}
+        onCancel={() => cancelContactFormModal()}
+        width={"70%"}
+        footer={null}
+      >
+        <ContactForm
+          editContact={editContact}
+          cancel={cancelContactFormModal}
+          createContact={createContact}
         />
       </Modal>
     </div>

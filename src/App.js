@@ -55,12 +55,12 @@ function App() {
           path="/"
           element={
             <PrivateRoute>
-              <Home />
+              <Contacts />
             </PrivateRoute>
           }
         />
         <Route exact path="/*" element={<PrivateOutlet />}>
-          <Route path="dashboard" element={<Home />} />
+          <Route path="dashboard" element={<Contacts />} />
           <Route path="contacts" element={<Contacts />} />
         </Route>
       </Routes>
