@@ -29,7 +29,7 @@ import baseUrl from "../../utils/baseUrl";
 
 import allCountry from "./country.json";
 
-console.log("All Country is : ", allCountry);
+// console.log("All Country is : ", allCountry);
 
 const { Option } = Select;
 

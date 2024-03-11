@@ -69,7 +69,7 @@ const CreateContactForm = ({
 
     // console.log("submit data is : ", submitData);
     if (editContact) {
-      console.log("edit contact is : ", editContact);
+      // console.log("edit contact is : ", editContact);
       delete submitData.id;
       delete submitData.uuid;
       delete submitData.updated_at;
@@ -154,7 +154,7 @@ const CreateContactForm = ({
     };
   }, [editContact, createContact]);
 
-  console.log("form value is : ", getValues());
+  // console.log("form value is : ", getValues());
 
   return (
     <div>

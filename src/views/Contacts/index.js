@@ -195,7 +195,7 @@ const ContactsView = ({ success, error }) => {
   const [editContact, setEditContact] = useState(null);
 
   const [
-    deleteContact,
+    DeleteContact,
     { error: deleteError, status: deleteStatus, isSuccess: deleteSucces },
   ] = useDeleteContactMutation();
 
@@ -243,6 +243,13 @@ const ContactsView = ({ success, error }) => {
   useEffect(() => {
     refetch();
   }, []);
+
+  const deleteAContact = (id)=>{
+    if(!id){
+      return
+    }
+    DeleteContact(id)
+  }
 
   const columns = [
     {
@@ -328,7 +335,7 @@ const ContactsView = ({ success, error }) => {
           <Popconfirm
             title="Delete the task"
             description="Are you sure to delete this task?"
-            onConfirm={() => deleteContact(record.id)}
+            onConfirm={() => deleteAContact(record?.id)}
             okText="Yes"
             cancelText="No"
           >

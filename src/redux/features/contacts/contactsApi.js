@@ -94,8 +94,8 @@ const contactsApi = apiSlice.injectEndpoints({
           },
         };
       },
-
       invalidatesTags: ["Contacts"],
+      providesTags: ["Contacts"],
     }),
   }),
   overrideExisting: true,
