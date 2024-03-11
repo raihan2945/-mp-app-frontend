@@ -28,7 +28,7 @@ import upazilas from "./upazila.json";
 const { Option } = Select;
 const { Search } = Input;
 
-const ContactForm = ({
+const CreateContactForm = ({
   cancel,
   success,
   error,
@@ -324,4 +324,4 @@ const ContactForm = ({
   );
 };
 
-export default ContactForm;
+export default CreateContactForm;

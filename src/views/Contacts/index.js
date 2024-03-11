@@ -1,5 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Card, Table, Space, Tag, Button, Modal, Checkbox, Popconfirm } from "antd";
+import {
+  Card,
+  Table,
+  Space,
+  Tag,
+  Button,
+  Modal,
+  Checkbox,
+  Popconfirm,
+} from "antd";
 import SearchBar from "./SearchBar";
 import {
   useDeleteContactMutation,
@@ -22,6 +31,7 @@ import {
   Font,
 } from "@react-pdf/renderer";
 import ContactForm from "./ContactForm";
+import CreateContactForm from "./CreateContactForm";
 
 Font.register({
   family: "Kalpurush",
@@ -318,7 +328,7 @@ const ContactsView = ({ success, error }) => {
           <Popconfirm
             title="Delete the task"
             description="Are you sure to delete this task?"
-            onConfirm={()=>deleteContact(record.id)}
+            onConfirm={() => deleteContact(record.id)}
             okText="Yes"
             cancelText="No"
           >
@@ -595,13 +605,23 @@ const ContactsView = ({ success, error }) => {
         width={"70%"}
         footer={null}
       >
-        <ContactForm
-          success={success}
-          error={error}
-          editContact={editContact}
-          cancel={cancelContactFormModal}
-          createContact={createContact}
-        />
+        {createContact ? (
+          <CreateContactForm
+            success={success}
+            error={error}
+            editContact={editContact}
+            cancel={cancelContactFormModal}
+            createContact={createContact}
+          />
+        ) : (
+          <ContactForm
+            success={success}
+            error={error}
+            editContact={editContact}
+            cancel={cancelContactFormModal}
+            createContact={createContact}
+          />
+        )}
       </Modal>
     </div>
   );
