@@ -55,7 +55,7 @@ const contactsApi = apiSlice.injectEndpoints({
       invalidatesTags: ["Contacts"],
     }),
     createContact: builder.mutation({
-      query: ({ data }) => {
+      query: (data) => {
         return {
           url: `/api/v1/contacts`,
           method: "POST",
@@ -70,9 +70,9 @@ const contactsApi = apiSlice.injectEndpoints({
       providesTags: ["Contacts"],
     }),
     updateContact: builder.mutation({
-      query: ({ data }) => {
+      query: ({ id, data }) => {
         return {
-          url: `/api/v1/contacts`,
+          url: `/api/v1/contacts/${id}`,
           method: "PUT",
           body: data,
           headers: {
@@ -85,11 +85,10 @@ const contactsApi = apiSlice.injectEndpoints({
       providesTags: ["Contacts"],
     }),
     deleteContact: builder.mutation({
-      query: ({ data }) => {
+      query: (id) => {
         return {
-          url: `/api/v1/chemists`,
-          method: "POST",
-          body: data,
+          url: `/api/v1/contacts/${id}`,
+          method: "DELETE",
           headers: {
             authorization: `Bearer ${token}`,
           },
@@ -97,7 +96,6 @@ const contactsApi = apiSlice.injectEndpoints({
       },
 
       invalidatesTags: ["Contacts"],
-      providesTags: ["Contacts"],
     }),
   }),
   overrideExisting: true,
@@ -109,5 +107,6 @@ export const {
   useCreateContactMutation,
   useUpdateContactMutation,
   useGetContactDetailsQuery,
+  useDeleteContactMutation,
 } = contactsApi;
 export default contactsApi;

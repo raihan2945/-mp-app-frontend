@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AutoComplete,
   Button,
@@ -15,7 +15,11 @@ import {
   useCreateDoctorExperienceMutation,
   useUpdateDoctorExperienceMutation,
 } from "../../redux/features/experience/experienceApi";
-import { useGetAllTagsQuery } from "../../redux/features/contacts/contactsApi";
+import {
+  useCreateContactMutation,
+  useGetAllTagsQuery,
+  useUpdateContactMutation,
+} from "../../redux/features/contacts/contactsApi";
 
 import divisions from "./division.json";
 import districts from "./district.json";
@@ -24,20 +28,8 @@ import upazilas from "./upazila.json";
 const { Option } = Select;
 const { Search } = Input;
 
-const designations = [
-  { value: "Dr.", label: "Dr." },
-  { value: "Prof. Dr.", label: "Prof. Dr." },
-  { value: "Assoc. Prof. Dr.", label: "Assoc. Prof. Dr." },
-  { value: "Assist. Prof. Dr.", label: "Assist. Prof. Dr." },
-  { value: "Senior Consultant", label: "Senior Consultant" },
-  { value: "Consultant", label: "Consultant" },
-  { value: "Resident Consultant", label: "Resident Consultant" },
-  { value: "Surgeon", label: "Surgeon" },
-];
-
 const ContactForm = ({
   cancel,
-  doctor,
   success,
   error,
   refetch,
@@ -46,40 +38,48 @@ const ContactForm = ({
 }) => {
   const { register, setValue, watch, getValues, reset } = useForm();
 
+  const [allDistrcits, setAllDistricts] = useState([]);
+  const [allUpazilas, setAllUpazilas] = useState([]);
+
+  const [selectedDivision, setSelectedDivision] = useState(null);
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+
   const { data: getTags } = useGetAllTagsQuery();
 
-  const { data: getInstitutes, refetch: refetchIns } = useGetInstitutesQuery(
-    watch("institute_name")
-  );
   const [
-    createDoctorExperience,
+    CreateContact,
     { error: createError, status: createStatus, isSuccess: createSuccess },
-  ] = useCreateDoctorExperienceMutation();
+  ] = useCreateContactMutation();
 
   const [
-    updateDoctorExperience,
+    UpdateContact,
     { error: updateError, status: updateStatus, isSuccess: updateSuccess },
-  ] = useUpdateDoctorExperienceMutation();
+  ] = useUpdateContactMutation();
 
   const submitExperience = () => {
     const formValues = getValues();
-    // console.log("form Values is : ", formValues);
-    if (editContact) {
-      delete formValues.uuid;
-      delete formValues.dr_id;
-      delete formValues.created_at;
-      delete formValues.updated_at;
-      updateDoctorExperience({ id: editContact?.id, data: formValues });
-    } else {
-      formValues.dr_id = doctor?.id;
-      createDoctorExperience(formValues);
-    }
-  };
 
-  const getIndex = (array, name) => {
-    return array?.findIndex((v) => {
-      return Object.keys(v)[0] === name;
+    let submitData = {};
+
+    Object.keys(formValues).map((key) => {
+      if (formValues[key]) {
+        submitData[key] = formValues[key];
+      }
     });
+
+    // console.log("submit data is : ", submitData);
+    if (editContact) {
+      console.log("edit contact is : ", editContact);
+      delete submitData.id;
+      delete submitData.uuid;
+      delete submitData.updated_at;
+      delete submitData.created_at;
+
+      UpdateContact({ id: editContact?.id, data: submitData });
+    } else {
+      // formValues.dr_id = doctor?.id;
+      CreateContact(submitData);
+    }
   };
 
   const handleChange = (name, value) => {};
@@ -96,9 +96,9 @@ const ContactForm = ({
       }
     }
     if (createSuccess) {
-      success("Experience created successfully");
+      success("Contact created successfully");
       cancel();
-      refetch();
+      // refetch();
     }
   }, [createStatus, createSuccess, createError]);
 
@@ -114,11 +114,29 @@ const ContactForm = ({
       }
     }
     if (updateSuccess) {
-      success("Experience updated successfully");
+      success("Contact updated successfully");
       cancel();
-      refetch();
+      // refetch();
     }
   }, [updateStatus, updateSuccess, updateError]);
+
+  useEffect(() => {
+    if (watch("division")) {
+      const div = divisions.find((d) => d.bn_name == watch("division"));
+      const dis = districts.filter((dis) => dis.division_id === div.id);
+      setAllDistricts(dis);
+      setValue("district", null);
+      setValue("upazila", null);
+    }
+  }, [watch("division")]);
+
+  useEffect(() => {
+    if (watch("district")) {
+      const dis = districts.find((d) => d.bn_name == watch("district"));
+      const upaz = upazilas.filter((up) => up.district_id === dis.id);
+      setAllUpazilas(upaz);
+    }
+  }, [watch("district")]);
 
   useEffect(() => {
     if (editContact) {
@@ -140,14 +158,10 @@ const ContactForm = ({
     <div>
       <Form layout="vertical">
         <Form.Item label="Name" style={{ marginBottom: "5px" }}>
-          <input {...register("name")} type="text" class="form-control" />
+          <input {...register("first_name")} type="text" class="form-control" />
         </Form.Item>
         <Form.Item label="Designation" style={{ marginBottom: "5px" }}>
-          <input
-            {...register("designtaion")}
-            type="text"
-            class="form-control"
-          />
+          <input {...register("last_name")} type="text" class="form-control" />
         </Form.Item>
         <Form.Item label="Mobile" style={{ marginBottom: "5px" }}>
           <input {...register("mobile")} type="text" class="form-control" />
@@ -196,7 +210,7 @@ const ContactForm = ({
           <Select
             style={{ minWidth: "100%" }}
             defaultValue={null}
-            onChange={(value) => handleChange("division", value)}
+            onChange={(value) => setValue("division", value)}
             size="large"
             showSearch
             filterOption={(input, option) =>
@@ -210,7 +224,7 @@ const ContactForm = ({
           >
             <Option value={null}>Select Division</Option>
             {divisions?.map((d) => (
-              <Option value={d?.name}>{d?.name}</Option>
+              <Option value={d?.bn_name}>{d?.bn_name}</Option>
             ))}
           </Select>
         </Form.Item>
@@ -219,7 +233,7 @@ const ContactForm = ({
           <Select
             style={{ minWidth: "100%" }}
             defaultValue={null}
-            onChange={(value) => handleChange("district", value)}
+            onChange={(value) => setValue("district", value)}
             size="large"
             showSearch
             filterOption={(input, option) =>
@@ -232,9 +246,13 @@ const ContactForm = ({
             }
           >
             <Option value={null}>Select District</Option>
-            {districts?.map((d) => (
-              <Option value={d?.name}>{d?.name}</Option>
-            ))}
+            {watch("division")
+              ? allDistrcits?.map((d) => (
+                  <Option value={d?.bn_name}>{d?.bn_name}</Option>
+                ))
+              : districts?.map((d) => (
+                  <Option value={d?.bn_name}>{d?.bn_name}</Option>
+                ))}
           </Select>
         </Form.Item>
 
@@ -243,25 +261,29 @@ const ContactForm = ({
           style={{ marginTop: ".5rem", marginBottom: "5px" }}
         >
           <Select
-              style={{ minWidth: "100%" }}
-              defaultValue={null}
-              onChange={(value) => handleChange("upazila", value)}
-              size="large"
-              showSearch
-              filterOption={(input, option) =>
-                (option?.value?.toLocaleLowerCase() ?? "").includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? "")
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? "").toLowerCase())
-              }
-            >
-              <Option value={null}>Select Upazila</Option>
-              {upazilas?.map((d) => (
-                <Option value={d?.name}>{d?.name}</Option>
-              ))}
-            </Select>
+            style={{ minWidth: "100%" }}
+            defaultValue={null}
+            onChange={(value) => setValue("upazila", value)}
+            size="large"
+            showSearch
+            filterOption={(input, option) =>
+              (option?.value?.toLocaleLowerCase() ?? "").includes(input)
+            }
+            filterSort={(optionA, optionB) =>
+              (optionA?.label ?? "")
+                .toLowerCase()
+                .localeCompare((optionB?.label ?? "").toLowerCase())
+            }
+          >
+            <Option value={null}>Select Upazila</Option>
+            {watch("district")
+              ? allUpazilas?.map((d) => (
+                  <Option value={d?.bn_name}>{d?.bn_name}</Option>
+                ))
+              : upazilas?.map((d) => (
+                  <Option value={d?.bn_name}>{d?.bn_name}</Option>
+                ))}
+          </Select>
         </Form.Item>
 
         <Form.Item

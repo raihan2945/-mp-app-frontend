@@ -129,7 +129,7 @@ const SearchBar = ({
             >
               <Option value={null}>Select Division</Option>
               {divisions?.map((d) => (
-                <Option value={d?.name}>{d?.name}</Option>
+                <Option value={d?.bn_name}>{d?.bn_name}</Option>
               ))}
             </Select>
           </div>
@@ -152,7 +152,7 @@ const SearchBar = ({
             >
               <Option value={null}>Select District</Option>
               {districts?.map((d) => (
-                <Option value={d?.name}>{d?.name}</Option>
+                <Option value={d?.bn_name}>{d?.bn_name}</Option>
               ))}
             </Select>
           </div>
@@ -175,7 +175,7 @@ const SearchBar = ({
             >
               <Option value={null}>Select Upazila</Option>
               {upazilas?.map((d) => (
-                <Option value={d?.name}>{d?.name}</Option>
+                <Option value={d?.bn_name}>{d?.bn_name}</Option>
               ))}
             </Select>
           </div>

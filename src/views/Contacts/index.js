@@ -1,13 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Card, Table, Space, Tag, Button, Modal, Checkbox } from "antd";
+import { Card, Table, Space, Tag, Button, Modal, Checkbox, Popconfirm } from "antd";
 import SearchBar from "./SearchBar";
-import { useGetAllContactsQuery } from "../../redux/features/contacts/contactsApi";
+import {
+  useDeleteContactMutation,
+  useGetAllContactsQuery,
+} from "../../redux/features/contacts/contactsApi";
 
 //icons
 import { IoMdAddCircle } from "react-icons/io";
 import { FaPrint } from "react-icons/fa6";
 
-import banlgaFont from "./fonts/Nikosh-Regular.ttf";
+import banlgaFont from "./fonts/Kalpurush-Regular.ttf";
 
 import {
   Page,
@@ -21,7 +24,7 @@ import {
 import ContactForm from "./ContactForm";
 
 Font.register({
-  family: "SolaimanLipi",
+  family: "Kalpurush",
   src: banlgaFont,
 });
 
@@ -52,16 +55,12 @@ const CustomContent = ({ data, checkingContent }) => (
     <Text style={customStyles.heading1}>
       {checkingContent?.first_name &&
         data.first_name &&
-        `${data?.first_name} -`}
+        `${data?.first_name}  `}
     </Text>
     <Text style={customStyles.heading}>
       {checkingContent?.last_name && data?.last_name && `${data?.last_name} `}
     </Text>
-    {data?.mobile && checkingContent?.mobile && (
-      <View
-        style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
-      ></View>
-    )}
+
     <Text style={customStyles.paragraph}>
       {checkingContent.mobile &&
         data?.mobile &&
@@ -70,31 +69,71 @@ const CustomContent = ({ data, checkingContent }) => (
     <Text style={customStyles.paragraph}>
       {checkingContent?.email && data?.email && `${data?.email} `}
     </Text>
-    {checkingContent?.tag && data?.tag && (
-      <View>
-        <View
-          style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
-        ></View>
-        <Text style={customStyles.paragraph}>
-          {checkingContent?.tag && data?.tag && `${data?.tag} `}
-        </Text>
-      </View>
-    )}
-    {(data?.union || data?.upazila || data?.district || data?.division) && (
-      <View
-        style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
-      ></View>
-    )}
+
     <Text style={customStyles.paragraph}>
-      {checkingContent?.union && data?.union && `${data?.union} ,`}{" "}
+      {checkingContent?.tag && data?.tag && `${data?.tag} `}
+    </Text>
+
+    <Text style={customStyles.paragraph}>
+      {checkingContent?.union && data?.union && `${data?.union} ,`}
       {checkingContent?.upazila && data?.upazila && `${data?.upazila} `}
     </Text>
+
     <Text style={customStyles.paragraph}>
       {checkingContent?.district && data?.district && `${data?.district}`}{" "}
       {checkingContent?.division && data?.division && `, ${data?.division} `}
     </Text>
   </View>
 );
+// Your custom component with a <div> and CSS styles
+// const CustomContent = ({ data, checkingContent }) => (
+//   <View style={customStyles.container}>
+//     <Text style={customStyles.heading1}>
+//       {checkingContent?.first_name &&
+//         data.first_name &&
+//         `${data?.first_name} -`}
+//     </Text>
+//     <Text style={customStyles.heading}>
+//       {checkingContent?.last_name && data?.last_name && `${data?.last_name} `}
+//     </Text>
+//     {data?.mobile && checkingContent?.mobile && (
+//       <View
+//         style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
+//       ></View>
+//     )}
+//     <Text style={customStyles.paragraph}>
+//       {checkingContent.mobile &&
+//         data?.mobile &&
+//         `0${data.mobile}`.getDigitBanglaFromEnglish()}
+//     </Text>
+//     <Text style={customStyles.paragraph}>
+//       {checkingContent?.email && data?.email && `${data?.email} `}
+//     </Text>
+//     {checkingContent?.tag && data?.tag && (
+//       <View>
+//         <View
+//           style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
+//         ></View>
+//         <Text style={customStyles.paragraph}>
+//           {checkingContent?.tag && data?.tag && `${data?.tag} `}
+//         </Text>
+//       </View>
+//     )}
+//     {(data?.union || data?.upazila || data?.district || data?.division) && (
+//       <View
+//         style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
+//       ></View>
+//     )}
+//     <Text style={customStyles.paragraph}>
+//       {checkingContent?.union && data?.union && `${data?.union} ,`}{" "}
+//       {checkingContent?.upazila && data?.upazila && `${data?.upazila} `}
+//     </Text>
+//     <Text style={customStyles.paragraph}>
+//       {checkingContent?.district && data?.district && `${data?.district}`}{" "}
+//       {checkingContent?.division && data?.division && `, ${data?.division} `}
+//     </Text>
+//   </View>
+// );
 
 // PDF Document component with custom page size and multiple pages
 const PDFDocument = ({ dataArray, checkingContent }) => (
@@ -137,13 +176,18 @@ const PDFViewerComponent = ({ dataArray, checkingContent }) => (
   </PDFViewer>
 );
 
-const ContactsView = () => {
+const ContactsView = ({ success, error }) => {
   const [searchItems, setSearchItems] = useState([]);
   const [isPrint, setPrint] = useState(null);
   const [contacts, setContacts] = useState([]);
 
   const [createContact, setCreateContact] = useState(false);
   const [editContact, setEditContact] = useState(null);
+
+  const [
+    deleteContact,
+    { error: deleteError, status: deleteStatus, isSuccess: deleteSucces },
+  ] = useDeleteContactMutation();
 
   const cancelContactFormModal = () => {
     setCreateContact(false);
@@ -164,6 +208,31 @@ const ContactsView = () => {
   });
 
   const { data: getContacts, refetch } = useGetAllContactsQuery(searchItems);
+
+  useEffect(() => {
+    if (deleteError) {
+      if (deleteError.status == 400) {
+        deleteError.data.error.map((er) => {
+          return error(er);
+        });
+      }
+      if (deleteError.status == 500) {
+        error("Server Error : 500");
+      }
+    }
+    if (deleteSucces) {
+      success("Contact deleted successfully");
+      refetch();
+    }
+  }, [deleteStatus, deleteSucces, deleteError]);
+
+  useEffect(() => {
+    setContacts(getContacts?.data);
+  }, [getContacts]);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const columns = [
     {
@@ -246,24 +315,19 @@ const ContactsView = () => {
           >
             Edit
           </Button>
-          <Button
-            style={{ border: "none", boxShadow: "none", color: "red" }}
-            size="small"
+          <Popconfirm
+            title="Delete the task"
+            description="Are you sure to delete this task?"
+            onConfirm={()=>deleteContact(record.id)}
+            okText="Yes"
+            cancelText="No"
           >
-            Delete
-          </Button>
+            <Button danger>Delete</Button>
+          </Popconfirm>
         </div>
       ),
     },
   ];
-
-  useEffect(() => {
-    setContacts(getContacts?.data);
-  }, [getContacts]);
-
-  useEffect(() => {
-    refetch();
-  }, []);
 
   return (
     <div>
@@ -532,6 +596,8 @@ const ContactsView = () => {
         footer={null}
       >
         <ContactForm
+          success={success}
+          error={error}
           editContact={editContact}
           cancel={cancelContactFormModal}
           createContact={createContact}
@@ -572,24 +638,26 @@ const customStyles = {
     height: "143pt",
   },
   heading1: {
-    fontSize: "16px",
+    fontSize: "14px",
     color: "#333333",
-    marginBottom: "5px",
-    fontFamily: "SolaimanLipi",
+    fontFamily: "Kalpurush",
+    margin: 0,
     // width:"max-content"
   },
   heading: {
     fontSize: "12px",
     color: "#333333",
-    marginBottom: "5px",
-    fontFamily: "SolaimanLipi",
+    fontFamily: "Kalpurush",
     // width:"max-content"
+    // lineHeight:1.1,
+    margin: 0,
   },
   paragraph: {
     fontSize: "12px",
     color: "#666666",
     lineHeight: "1.1",
-    fontFamily: "SolaimanLipi",
+    fontFamily: "Kalpurush",
+    marginBottom: "5px",
   },
 };
 
