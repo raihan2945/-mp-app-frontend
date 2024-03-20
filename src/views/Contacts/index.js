@@ -150,17 +150,13 @@ const PDFDocument = ({ dataArray, checkingContent }) => (
   <Document>
     {/* Map the array and create pages with 8 components on each page */}
     {Array.from({ length: Math.ceil(dataArray.length / 8) }, (_, pageIndex) => (
-      <Page
-        key={pageIndex}
-        size={{ width: 439.2, height: 590.4 }}
-        style={styles.page}
-      >
+      <Page key={pageIndex} size="A4" style={styles.page}>
         <View style={styles.section}>
           {/* Render 8 components on each page */}
-          {Array.from({ length: 4 }, (_, rowIndex) => (
+          {Array.from({ length: 5 }, (_, rowIndex) => (
             <View key={rowIndex} style={styles.row}>
               {Array.from({ length: 2 }, (_, colIndex) => {
-                const itemIndex = pageIndex * 8 + rowIndex * 2 + colIndex;
+                const itemIndex = pageIndex * 10 + rowIndex * 2 + colIndex;
                 return itemIndex < dataArray.length ? (
                   <View key={colIndex} style={styles.column}>
                     {/* Use the CustomContent component with the corresponding data */}
@@ -244,12 +240,12 @@ const ContactsView = ({ success, error }) => {
     refetch();
   }, []);
 
-  const deleteAContact = (id)=>{
-    if(!id){
-      return
+  const deleteAContact = (id) => {
+    if (!id) {
+      return;
     }
-    DeleteContact(id)
-  }
+    DeleteContact(id);
+  };
 
   const columns = [
     {
@@ -639,17 +635,25 @@ const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
     backgroundColor: "white",
+    paddingTop: "4mm",
+    width: "21cm",
+    justifyContent: "center",
+    overflow: "hidden",
+    margin: "0",
   },
-  section: {
-    // margin: 10,
-    flexGrow: 1,
-  },
+  // section: {
+  //   // margin: 10,
+  //   flexGrow: 1,
+  // },
   row: {
+    width: "100%",
     flexDirection: "row",
-  },
-  column: {
-    flex: 1,
-    margin: 2,
+    justifyContent: "center",
+    gap: "5mm",
+    margin: 0,
+    marginBottom: "4mm",
+    // border: "1px solid black",
+    marginLeft:"13pt"
   },
 });
 
@@ -657,12 +661,18 @@ const styles = StyleSheet.create({
 const customStyles = {
   container: {
     // backgroundColor: "#ffffff",
-    padding: "15px",
+    paddingLeft: "15px",
+    // paddingTop:"20px",
     // border: "1px solid #F2F2F2",
     borderRadius: "8px",
     // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    width: "216pt",
-    height: "143pt",
+    width: "225pt",
+    height: "154pt",
+
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    boxSizing: "border-box",
   },
   heading1: {
     fontSize: "14px",
@@ -684,7 +694,7 @@ const customStyles = {
     color: "#666666",
     lineHeight: "1.1",
     fontFamily: "Kalpurush",
-    marginBottom: "5px",
+    marginBottom: "2px",
   },
 };
 
