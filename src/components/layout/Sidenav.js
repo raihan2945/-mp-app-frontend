@@ -44,7 +44,7 @@ function Sidenav({ color }) {
     <>
       <div className="brand">
         <img src={logo} alt="" />
-        <span>EMIO</span>
+        <span>MP APP</span>
       </div>
       <hr />
 
