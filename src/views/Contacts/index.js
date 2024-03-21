@@ -83,6 +83,9 @@ const CustomContent = ({ data, checkingContent }) => (
     <Text style={customStyles.paragraph}>
       {checkingContent?.tag && data?.tag && `${data?.tag} `}
     </Text>
+    <Text style={customStyles.paragraph}>
+      {checkingContent?.office && data?.office && `${data?.office} `}
+    </Text>
 
     <Text style={customStyles.paragraph}>
       {checkingContent?.union && data?.union && `${data?.union} ,`}
@@ -190,6 +193,18 @@ const ContactsView = ({ success, error }) => {
   const [createContact, setCreateContact] = useState(false);
   const [editContact, setEditContact] = useState(null);
 
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const onSelectChange = (selectedRowKeys, selectedRows) => {
+    setSelectedRows(selectedRows);
+  };
+
+  const rowSelection = {
+    onChange: onSelectChange,
+  };
+
+  console.log("selected rows are : ", selectedRows);
+
   const [
     DeleteContact,
     { error: deleteError, status: deleteStatus, isSuccess: deleteSucces },
@@ -211,6 +226,7 @@ const ContactsView = ({ success, error }) => {
     district: true,
     division: true,
     tag: true,
+    office: true,
   });
 
   const { data: getContacts, refetch } = useGetAllContactsQuery(searchItems);
@@ -269,6 +285,11 @@ const ContactsView = ({ success, error }) => {
       title: "Mobile",
       dataIndex: "mobile",
       key: "mobile",
+    },
+    {
+      title: "Office",
+      dataIndex: "office",
+      key: "office",
     },
 
     {
@@ -366,7 +387,10 @@ const ContactsView = ({ success, error }) => {
         </Button>
         <Button
           onClick={() => {
-            setPrint(true);
+            // setPrint(true);
+            setPrint( Array.isArray(selectedRows) && selectedRows?.length > 0
+            ? selectedRows
+            : contacts)
             // handlePrint();
           }}
           type="primary"
@@ -382,6 +406,8 @@ const ContactsView = ({ success, error }) => {
           columns={columns}
           dataSource={contacts}
           scroll={{ x: true }}
+          rowSelection={{ ...rowSelection, type: "checkbox" }}
+          rowKey={(record) => record.id}
         />
       </div>
 
@@ -472,6 +498,25 @@ const ContactsView = ({ success, error }) => {
                 }}
               >
                 Email
+              </Checkbox>
+            </Tag>
+            <Tag>
+              <Checkbox
+                checked={checkingContent.office}
+                onChange={(e) => {
+                  const checkedValue = e.target.checked;
+
+                  let obj = { ...checkingContent };
+                  if (checkedValue) {
+                    obj.office = true;
+                    setCheckingContent(obj);
+                  } else {
+                    obj.office = false;
+                    setCheckingContent(obj);
+                  }
+                }}
+              >
+                Office
               </Checkbox>
             </Tag>
             <Tag>
@@ -597,7 +642,12 @@ const ContactsView = ({ success, error }) => {
           ))}
         </PrintComponent> */}
         <PDFViewerComponent
-          dataArray={contacts}
+          // dataArray={
+          //   Array.isArray(selectedRows) && selectedRows?.length > 0
+          //     ? selectedRows
+          //     : contacts
+          // }
+          dataArray={isPrint}
           checkingContent={checkingContent}
         />
       </Modal>
@@ -648,12 +698,12 @@ const styles = StyleSheet.create({
   row: {
     width: "100%",
     flexDirection: "row",
-    justifyContent: "center",
+    // justifyContent: "center",
     gap: "5mm",
     margin: 0,
     marginBottom: "4mm",
     // border: "1px solid black",
-    marginLeft:"13pt"
+    marginLeft: "13pt",
   },
 });
 
@@ -686,15 +736,16 @@ const customStyles = {
     color: "#333333",
     fontFamily: "Kalpurush",
     // width:"max-content"
-    // lineHeight:1.1,
+    lineHeight:1.05,
     margin: 0,
   },
   paragraph: {
     fontSize: "12px",
     color: "#666666",
-    lineHeight: "1.1",
+    lineHeight: 1.05,
     fontFamily: "Kalpurush",
     marginBottom: "2px",
+    marginTop:0
   },
 };
 
