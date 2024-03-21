@@ -703,7 +703,7 @@ const styles = StyleSheet.create({
     margin: 0,
     marginBottom: "4mm",
     // border: "1px solid black",
-    marginLeft: "13pt",
+    marginLeft: "20pt",
   },
 });
 
@@ -711,14 +711,13 @@ const styles = StyleSheet.create({
 const customStyles = {
   container: {
     // backgroundColor: "#ffffff",
-    paddingLeft: "15px",
+    padding: "0px 18px",
     // paddingTop:"20px",
     // border: "1px solid #F2F2F2",
     borderRadius: "8px",
     // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     width: "225pt",
     height: "154pt",
-
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
