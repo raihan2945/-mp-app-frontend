@@ -89,6 +89,9 @@ const CustomContent = ({ data, checkingContent }) => (
     <Text style={customStyles.paragraph}>
       {checkingContent?.address && data?.address && `${data?.address} `}
     </Text>
+    <Text style={customStyles.paragraph}>
+      {checkingContent?.address_2 && data?.address_2 && `${data?.address_2} `}
+    </Text>
 
     <Text style={customStyles.paragraph}>
       {checkingContent?.union && data?.union && `${data?.union} ,`}
@@ -224,6 +227,7 @@ const ContactsView = ({ success, error }) => {
     mobile: true,
     email: true,
     address: true,
+    address_2: true,
     union: true,
     upazila: true,
     district: true,
@@ -321,6 +325,11 @@ const ContactsView = ({ success, error }) => {
       key: "address",
     },
     {
+      title: "Address 2",
+      dataIndex: "address_2",
+      key: "address_2",
+    },
+    {
       title: "Email",
       dataIndex: "email",
       key: "email",
@@ -391,9 +400,11 @@ const ContactsView = ({ success, error }) => {
         <Button
           onClick={() => {
             // setPrint(true);
-            setPrint( Array.isArray(selectedRows) && selectedRows?.length > 0
-            ? selectedRows
-            : contacts)
+            setPrint(
+              Array.isArray(selectedRows) && selectedRows?.length > 0
+                ? selectedRows
+                : contacts
+            );
             // handlePrint();
           }}
           type="primary"
@@ -539,6 +550,25 @@ const ContactsView = ({ success, error }) => {
                 }}
               >
                 Address
+              </Checkbox>
+            </Tag>
+            <Tag>
+              <Checkbox
+                checked={checkingContent.address_2}
+                onChange={(e) => {
+                  const checkedValue = e.target.checked;
+
+                  let obj = { ...checkingContent };
+                  if (checkedValue) {
+                    obj.address_2 = true;
+                    setCheckingContent(obj);
+                  } else {
+                    obj.address_2 = false;
+                    setCheckingContent(obj);
+                  }
+                }}
+              >
+                Address 2
               </Checkbox>
             </Tag>
             <Tag>
@@ -727,27 +757,27 @@ const customStyles = {
     boxSizing: "border-box",
   },
   heading1: {
-    fontSize: "14px",
+    fontSize: "12px",
     color: "#333333",
     fontFamily: "Kalpurush",
     margin: 0,
     // width:"max-content"
   },
   heading: {
-    fontSize: "12px",
+    fontSize: "10px",
     color: "#333333",
     fontFamily: "Kalpurush",
     // width:"max-content"
-    lineHeight:1.05,
+    lineHeight: 1.05,
     margin: 0,
   },
   paragraph: {
-    fontSize: "12px",
+    fontSize: "10px",
     color: "#666666",
     lineHeight: 1.05,
     fontFamily: "Kalpurush",
     marginBottom: "2px",
-    marginTop:0
+    marginTop: 0,
   },
 };
 
