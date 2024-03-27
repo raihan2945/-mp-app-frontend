@@ -747,7 +747,7 @@ const customStyles = {
     // backgroundColor: "#ffffff",
     padding: "0px 18px",
     // paddingTop:"20px",
-    // border: "1px solid #F2F2F2",
+    border: "1px solid #F2F2F2",
     borderRadius: "8px",
     // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     width: "225pt",
@@ -758,14 +758,14 @@ const customStyles = {
     boxSizing: "border-box",
   },
   heading1: {
-    fontSize: "12px",
+    fontSize: "14px",
     color: "#333333",
     fontFamily: "Kalpurush",
     margin: 0,
     // width:"max-content"
   },
   heading: {
-    fontSize: "10px",
+    fontSize: "12px",
     color: "#333333",
     fontFamily: "Kalpurush",
     // width:"max-content"
@@ -773,7 +773,7 @@ const customStyles = {
     margin: 0,
   },
   paragraph: {
-    fontSize: "10px",
+    fontSize: "12px",
     color: "#333333",
     lineHeight: 0.9,
     fontFamily: "Kalpurush",
