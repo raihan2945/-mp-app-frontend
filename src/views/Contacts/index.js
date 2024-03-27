@@ -19,7 +19,7 @@ import {
 import { IoMdAddCircle } from "react-icons/io";
 import { FaPrint } from "react-icons/fa6";
 
-import banlgaFont from "./fonts/Kalpurush-Regular.ttf";
+import banlgaFont from "./fonts/Sagar-Normal.ttf";
 
 import {
   Page,
@@ -71,30 +71,31 @@ const CustomContent = ({ data, checkingContent }) => (
       {checkingContent?.last_name && data?.last_name && `${data?.last_name} `}
     </Text>
 
-    <Text style={customStyles.paragraph}>
-      {checkingContent.mobile &&
-        data?.mobile &&
-        `0${data.mobile}`.getDigitBanglaFromEnglish()}
-    </Text>
-    <Text style={customStyles.paragraph}>
-      {checkingContent?.email && data?.email && `${data?.email} `}
-    </Text>
+    {checkingContent.mobile && data?.mobile && (
+      <Text style={customStyles.paragraph}>
+        {`0${data.mobile}`.getDigitBanglaFromEnglish()}
+      </Text>
+    )}
+
+    {checkingContent?.email && data?.email && (
+      <Text style={customStyles.paragraph}>{`${data?.email} `}</Text>
+    )}
 
     {/* <Text style={customStyles.paragraph}>
       {checkingContent?.tag && data?.tag && `${data?.tag} `}
     </Text> */}
-    <Text style={customStyles.paragraph}>
-      {checkingContent?.office && data?.office && `${data?.office} `}
-    </Text>
-    <Text style={customStyles.paragraph}>
-      {checkingContent?.address && data?.address && `${data?.address} `}
-    </Text>
-    <Text style={customStyles.paragraph}>
-      {checkingContent?.address_2 && data?.address_2 && `${data?.address_2} `}
-    </Text>
+    {checkingContent?.office && data?.office && (
+      <Text style={customStyles.paragraph}>{`${data?.office} `}</Text>
+    )}
+    {data?.address && data?.address && (
+      <Text style={customStyles.paragraph}>{`${data?.address} `}</Text>
+    )}
+    {data?.address_2 && data?.address_2 && (
+      <Text style={customStyles.paragraph}>{`${data?.address_2} `}</Text>
+    )}
 
     <Text style={customStyles.paragraph}>
-      {checkingContent?.union && data?.union && `${data?.union} ,`}
+      {checkingContent?.union && data?.union && `${data?.union}, `}
       {checkingContent?.upazila && data?.upazila && `${data?.upazila} `}
     </Text>
 
@@ -768,13 +769,13 @@ const customStyles = {
     color: "#333333",
     fontFamily: "Kalpurush",
     // width:"max-content"
-    lineHeight: 1.05,
+    lineHeight: 1,
     margin: 0,
   },
   paragraph: {
     fontSize: "10px",
-    color: "#666666",
-    lineHeight: 1.05,
+    color: "#333333",
+    lineHeight: 0.9,
     fontFamily: "Kalpurush",
     marginBottom: "2px",
     marginTop: 0,
