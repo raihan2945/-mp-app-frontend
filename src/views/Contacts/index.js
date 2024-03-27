@@ -86,6 +86,9 @@ const CustomContent = ({ data, checkingContent }) => (
     <Text style={customStyles.paragraph}>
       {checkingContent?.office && data?.office && `${data?.office} `}
     </Text>
+    <Text style={customStyles.paragraph}>
+      {checkingContent?.address && data?.address && `${data?.address} `}
+    </Text>
 
     <Text style={customStyles.paragraph}>
       {checkingContent?.union && data?.union && `${data?.union} ,`}
