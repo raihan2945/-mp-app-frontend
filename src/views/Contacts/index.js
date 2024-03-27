@@ -80,9 +80,9 @@ const CustomContent = ({ data, checkingContent }) => (
       {checkingContent?.email && data?.email && `${data?.email} `}
     </Text>
 
-    <Text style={customStyles.paragraph}>
+    {/* <Text style={customStyles.paragraph}>
       {checkingContent?.tag && data?.tag && `${data?.tag} `}
-    </Text>
+    </Text> */}
     <Text style={customStyles.paragraph}>
       {checkingContent?.office && data?.office && `${data?.office} `}
     </Text>
