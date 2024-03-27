@@ -747,7 +747,7 @@ const customStyles = {
     // backgroundColor: "#ffffff",
     padding: "0px 18px",
     // paddingTop:"20px",
-    border: "1px solid #F2F2F2",
+    // border: "1px solid #F2F2F2",
     borderRadius: "8px",
     // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     width: "225pt",
