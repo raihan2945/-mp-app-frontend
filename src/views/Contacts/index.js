@@ -19,7 +19,8 @@ import {
 import { IoMdAddCircle } from "react-icons/io";
 import { FaPrint } from "react-icons/fa6";
 
-import banlgaFont from "./fonts/Sagar-Normal.ttf";
+// import banlgaFont from "./fonts/Mukti-Book.ttf";
+import banlgaFont from "./fonts/NotoSerifBengali-Regular.ttf";
 
 import {
   Page,
