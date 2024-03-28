@@ -98,7 +98,7 @@ const CustomContent = ({ data, checkingContent }) => (
       {checkingContent?.union &&
         data?.union &&
         `${data?.union}${
-          checkingContent?.upazila && data?.upazila ? `, ` : `।`
+          (checkingContent?.upazila && data?.upazila) ? `, ` : `। `
         }`}
 
       {checkingContent?.upazila && data?.upazila && `${data?.upazila}। `}
