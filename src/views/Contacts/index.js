@@ -737,7 +737,7 @@ const styles = StyleSheet.create({
     justifyContent:"flex-start",
     gap: "4mm",
     margin: 0,
-    marginBottom: "4mm",
+    marginBottom: "5mm",
     // border: "1px solid black",
     marginLeft: "20pt",
   },
