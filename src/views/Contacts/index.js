@@ -753,7 +753,7 @@ const customStyles = {
     borderRadius: "8px",
     // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     width: "225pt",
-    height: "154pt",
+    height: "151pt",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
