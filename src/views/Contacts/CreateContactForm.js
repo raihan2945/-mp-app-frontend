@@ -207,6 +207,10 @@ const CreateContactForm = ({
           </Select>
         </Form.Item>
 
+        <Form.Item label="Office" style={{ marginBottom: "5px" }}>
+          <input {...register("office")} type="text" class="form-control" />
+        </Form.Item>
+
         <Form.Item label="Address" style={{ marginBottom: "5px" }}>
           <input {...register("address")} type="text" class="form-control" />
         </Form.Item>
@@ -220,7 +224,7 @@ const CreateContactForm = ({
         </Form.Item>
 
         <Form.Item label="Company" style={{ marginBottom: "5px" }}>
-          <input {...register("email")} type="text" class="form-control" />
+          <input {...register("compnay")} type="text" class="form-control" />
         </Form.Item>
 
         <Form.Item label="Union" style={{ marginBottom: "5px" }}>

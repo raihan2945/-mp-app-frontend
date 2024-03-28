@@ -207,6 +207,10 @@ const ContactForm = ({
           </Select>
         </Form.Item>
 
+        <Form.Item label="Office" style={{ marginBottom: "5px" }}>
+          <input {...register("office")} type="text" class="form-control" />
+        </Form.Item>
+
         <Form.Item label="Address" style={{ marginBottom: "5px" }}>
           <input {...register("address")} type="text" class="form-control" />
         </Form.Item>
