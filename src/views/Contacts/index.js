@@ -745,7 +745,7 @@ const styles = StyleSheet.create({
 const customStyles = {
   container: {
     // backgroundColor: "#ffffff",
-    padding: "0px 18px",
+    padding: "0px 22px",
     // paddingTop:"20px",
     // border: "1px solid #F2F2F2",
     borderRadius: "8px",
