@@ -771,14 +771,14 @@ const customStyles = {
     boxSizing: "border-box",
   },
   heading1: {
-    fontSize: "12px",
+    fontSize: "10px",
     color: "#333333",
     fontFamily: "Kalpurush",
     margin: 0,
     // width:"max-content"
   },
   heading: {
-    fontSize: "10px",
+    fontSize: "8px",
     color: "#333333",
     fontFamily: "Kalpurush",
     // width:"max-content"
@@ -786,7 +786,7 @@ const customStyles = {
     margin: 0,
   },
   paragraph: {
-    fontSize: "10px",
+    fontSize: "8px",
     color: "#333333",
     lineHeight: 1.3,
     fontFamily: "Kalpurush",
