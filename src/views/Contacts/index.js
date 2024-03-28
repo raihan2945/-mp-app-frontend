@@ -20,7 +20,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { FaPrint } from "react-icons/fa6";
 
 // import banlgaFont from "./fonts/Mukti-Book.ttf";
-import banlgaFont from "./fonts/NotoSerifBengali-Regular.ttf";
+import banlgaFont from "./fonts/AdorshoLipi.ttf";
 
 import {
   Page,
@@ -771,24 +771,24 @@ const customStyles = {
     boxSizing: "border-box",
   },
   heading1: {
-    fontSize: "14px",
+    fontSize: "12px",
     color: "#333333",
     fontFamily: "Kalpurush",
     margin: 0,
     // width:"max-content"
   },
   heading: {
-    fontSize: "12px",
+    fontSize: "10px",
     color: "#333333",
     fontFamily: "Kalpurush",
     // width:"max-content"
-    lineHeight: 1,
+    lineHeight: 1.3,
     margin: 0,
   },
   paragraph: {
-    fontSize: "12px",
+    fontSize: "10px",
     color: "#333333",
-    lineHeight: 0.9,
+    lineHeight: 1.3,
     fontFamily: "Kalpurush",
     marginBottom: "2px",
     marginTop: 0,
