@@ -88,20 +88,30 @@ const CustomContent = ({ data, checkingContent }) => (
       <Text style={customStyles.paragraph}>{`${data?.office} `}</Text>
     )}
     {data?.address && data?.address && (
-      <Text style={customStyles.paragraph}>{`${data?.address} `}</Text>
+      <Text style={customStyles.paragraph}>{`${data?.address}। `}</Text>
     )}
     {data?.address_2 && data?.address_2 && (
-      <Text style={customStyles.paragraph}>{`${data?.address_2} `}</Text>
+      <Text style={customStyles.paragraph}>{`${data?.address_2}। `}</Text>
     )}
 
     <Text style={customStyles.paragraph}>
-      {checkingContent?.union && data?.union && `${data?.union}, `}
-      {checkingContent?.upazila && data?.upazila && `${data?.upazila} `}
+      {checkingContent?.union &&
+        data?.union &&
+        `${data?.union}${
+          checkingContent?.upazila && data?.upazila ? `, ` : `।`
+        }`}
+
+      {checkingContent?.upazila && data?.upazila && `${data?.upazila}। `}
     </Text>
 
     <Text style={customStyles.paragraph}>
-      {checkingContent?.district && data?.district && `${data?.district}`}{" "}
-      {checkingContent?.division && data?.division && `, ${data?.division} `}
+      {checkingContent?.district &&
+        data?.district &&
+        `${data?.district}${
+          checkingContent?.division && data?.division ? `, ` : `। `
+        }`}
+
+      {checkingContent?.division && data?.division && `${data?.division}। `}
     </Text>
   </View>
 );
@@ -210,7 +220,7 @@ const ContactsView = ({ success, error }) => {
     onChange: onSelectChange,
   };
 
-  console.log("selected rows are : ", selectedRows);
+  // console.log("selected rows are : ", selectedRows);
 
   const [
     DeleteContact,
@@ -733,8 +743,8 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     // justifyContent: "center",
-    paddingLeft:"20mm",
-    justifyContent:"flex-start",
+    paddingLeft: "20mm",
+    justifyContent: "flex-start",
     gap: "4mm",
     margin: 0,
     marginBottom: "5mm",
