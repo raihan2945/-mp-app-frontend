@@ -88,10 +88,10 @@ const CustomContent = ({ data, checkingContent }) => (
     {checkingContent?.office && data?.office && (
       <Text style={customStyles.paragraph}>{`${data?.office} `}</Text>
     )}
-    {data?.address && data?.address && (
+    {checkingContent?.address && data?.address && (
       <Text style={customStyles.paragraph}>{`${data?.address}। `}</Text>
     )}
-    {data?.address_2 && data?.address_2 && (
+    {checkingContent?.address_2 && data?.address_2 && (
       <Text style={customStyles.paragraph}>{`${data?.address_2}। `}</Text>
     )}
 
@@ -99,7 +99,7 @@ const CustomContent = ({ data, checkingContent }) => (
       {checkingContent?.union &&
         data?.union &&
         `${data?.union}${
-          (checkingContent?.upazila && data?.upazila) ? `, ` : `। `
+          checkingContent?.upazila && data?.upazila ? `, ` : `। `
         }`}
 
       {checkingContent?.upazila && data?.upazila && `${data?.upazila}। `}
