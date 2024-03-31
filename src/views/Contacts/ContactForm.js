@@ -62,9 +62,10 @@ const ContactForm = ({
     let submitData = {};
 
     Object.keys(formValues).map((key) => {
-      if (formValues[key]) {
-        submitData[key] = formValues[key];
-      }
+      submitData[key] = formValues[key];
+      // if (formValues[key]) {
+      //   submitData[key] = formValues[key];
+      // }
     });
 
     // console.log("submit data is : ", submitData);
@@ -187,8 +188,8 @@ const ContactForm = ({
         <Form.Item label="Tag" style={{ marginBottom: "5px" }}>
           <Select
             style={{ minWidth: 300 }}
-            defaultValue={null}
-            onChange={(value) => handleChange("tag", value)}
+            value={watch("tag")}
+            onChange={(value) => setValue("tag", value)}
             //   size="small"
             showSearch
             filterOption={(input, option) =>

@@ -187,8 +187,8 @@ const CreateContactForm = ({
         <Form.Item label="Tag" style={{ marginBottom: "5px" }}>
           <Select
             style={{ minWidth: 300 }}
-            defaultValue={null}
-            onChange={(value) => handleChange("tag", value)}
+            value={watch("tag")}
+            onChange={(value) => setValue("tag", value)}
             //   size="small"
             showSearch
             filterOption={(input, option) =>
