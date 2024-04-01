@@ -124,7 +124,7 @@ const ContactForm = ({
   useEffect(() => {
     if (watch("division")) {
       const div = divisions.find((d) => d.bn_name == watch("division"));
-      const dis = districts.filter((dis) => dis.division_id === div.id);
+      const dis = districts.filter((dis) => dis.division_id === div?.id);
       setAllDistricts(dis);
       setValue("district", null);
       setValue("upazila", null);
@@ -134,7 +134,7 @@ const ContactForm = ({
   useEffect(() => {
     if (watch("district")) {
       const dis = districts.find((d) => d.bn_name == watch("district"));
-      const upaz = upazilas.filter((up) => up.district_id === dis.id);
+      const upaz = upazilas.filter((up) => up.district_id === dis?.id);
       setAllUpazilas(upaz);
     }
   }, [watch("district")]);
