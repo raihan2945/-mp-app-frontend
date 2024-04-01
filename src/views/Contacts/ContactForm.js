@@ -68,7 +68,7 @@ const ContactForm = ({
       // }
     });
 
-    // console.log("submit data is : ", submitData);
+    console.log("submit data is : ", submitData);
     if (editContact) {
       // console.log("edit contact is : ", editContact);
       delete submitData.id;
@@ -235,8 +235,13 @@ const ContactForm = ({
         <Form.Item label="Division" style={{ marginBottom: "5px" }}>
           <Select
             style={{ minWidth: "100%" }}
-            defaultValue={null}
+            value={watch("division")}
             onChange={(value) => setValue("division", value)}
+            onSelect={(value) => {
+              if (!value) {
+                setValue("division", "");
+              }
+            }}
             size="large"
             showSearch
             filterOption={(input, option) =>
@@ -248,7 +253,7 @@ const ContactForm = ({
                 .localeCompare((optionB?.label ?? "").toLowerCase())
             }
           >
-            <Option value={null}>Select Division</Option>
+            <Option value={null}>None</Option>
             {divisions?.map((d) => (
               <Option value={d?.bn_name}>{d?.bn_name}</Option>
             ))}
@@ -258,8 +263,13 @@ const ContactForm = ({
         <Form.Item label="District" style={{ marginBottom: "5px" }}>
           <Select
             style={{ minWidth: "100%" }}
-            defaultValue={null}
+            value={watch("district")}
             onChange={(value) => setValue("district", value)}
+            onSelect={(value) => {
+              if (!value) {
+                setValue("district", "");
+              }
+            }}
             size="large"
             showSearch
             filterOption={(input, option) =>
@@ -271,7 +281,7 @@ const ContactForm = ({
                 .localeCompare((optionB?.label ?? "").toLowerCase())
             }
           >
-            <Option value={null}>Select District</Option>
+            <Option value={null}>None</Option>
             {watch("division")
               ? allDistrcits?.map((d) => (
                   <Option value={d?.bn_name}>{d?.bn_name}</Option>
@@ -288,8 +298,13 @@ const ContactForm = ({
         >
           <Select
             style={{ minWidth: "100%" }}
-            defaultValue={null}
+            value={watch("upazila")}
             onChange={(value) => setValue("upazila", value)}
+            onSelect={(value) => {
+              if (!value) {
+                setValue("upazila", "");
+              }
+            }}
             size="large"
             showSearch
             filterOption={(input, option) =>
@@ -301,7 +316,7 @@ const ContactForm = ({
                 .localeCompare((optionB?.label ?? "").toLowerCase())
             }
           >
-            <Option value={null}>Select Upazila</Option>
+            <Option value={null}>None</Option>
             {watch("district")
               ? allUpazilas?.map((d) => (
                   <Option value={d?.bn_name}>{d?.bn_name}</Option>
