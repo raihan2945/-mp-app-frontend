@@ -730,7 +730,7 @@ const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
     backgroundColor: "white",
-    paddingTop: "4mm",
+    paddingTop: "5mm",
     width: "21cm",
     // justifyContent: "center",
     overflow: "hidden",
