@@ -443,7 +443,7 @@ const ContactsView = ({ success, error }) => {
           setPrint(false);
         }}
         footer={null}
-        width={"50%"}
+        width={"70%"}
         centered
       >
         <Card
@@ -744,7 +744,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     // justifyContent: "center",
-    paddingLeft: "20mm",
+    paddingLeft: "24mm",
     justifyContent: "flex-start",
     gap: "4mm",
     margin: 0,
@@ -760,7 +760,7 @@ const customStyles = {
     // backgroundColor: "#ffffff",
     padding: "0px 22px",
     // paddingTop:"20px",
-    // border: "1px solid #F2F2F2",
+    border: "1px solid #F2F2F2",
     borderRadius: "8px",
     // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     width: "225pt",
