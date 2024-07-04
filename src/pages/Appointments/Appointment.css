@@ -36,9 +36,8 @@
 /* form */
 
 .form__container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-field {
@@ -55,4 +54,10 @@
 
 .form-btn {
     margin: 1rem 0;
+}
+
+
+.error-msg {
+    color: red;
+    font-size: 12px;
 }

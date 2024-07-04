@@ -1,11 +1,17 @@
+import { wait } from "@testing-library/user-event/dist/utils";
 import { Button } from "antd";
 import React from "react";
 import { useForm } from "react-hook-form";
 
 const AppointmentForm = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
   const onSubmit = async (data) => {
+    await wait(1000)
     console.log(data);
   };
 
@@ -20,21 +26,35 @@ const AppointmentForm = () => {
             <input
               className="form-control"
               type="text"
-              {...register("first_name")}
+              {...register("full_name", {
+                required: "Full name is required",
+              })}
               id="full_name"
               placeholder="Enter full name"
             />
+            {errors.full_name && (
+              <div className="error-msg">{errors.full_name.message}</div>
+            )}
           </p>
 
           <p className="form-field">
             <label htmlFor="mobile">Mobile</label>
             <input
               className="form-control"
-              type="text"
-              {...register("mobile")}
+              type="number"
+              {...register("mobile", {
+                required: "Mobile number is required",
+                minLength: {
+                  value: 11,
+                  message: "Mobile number must have 11 digits",
+                },
+              })}
               id="mobile"
               placeholder="Enter contact number"
             />
+            {errors.mobile && (
+              <div className="error-msg">{errors.mobile.message}</div>
+            )}
           </p>
 
           <p className="form-field">
@@ -104,7 +124,7 @@ const AppointmentForm = () => {
           </p>
         </div>
 
-        <Button htmlType="submit" className="form-btn" type="primary">
+        <Button loading={isSubmitting} htmlType="submit" className="form-btn" type="primary">
           Submit
         </Button>
       </form>
