@@ -1,15 +1,10 @@
 // import { useState } from "react";
 
 import {
-  AiOutlineUsergroupAdd,
   AiFillMedicineBox,
-  AiFillShop,
-  AiOutlineCompass,
-  AiOutlineFileText,
-  AiFillFile,
 } from "react-icons/ai";
 
-import { Menu, Button } from "antd";
+import { Menu } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 
@@ -46,6 +41,7 @@ function Sidenav({ color }) {
         <img src={logo} alt="" />
         <span>MP APP</span>
       </div>
+
       <hr />
 
       <Menu theme="light" mode="inline">
@@ -64,16 +60,16 @@ function Sidenav({ color }) {
         </Menu.Item>
 
         <Menu.Item key="3">
-          <NavLink to="/contacts">
+          <NavLink to="/appointments">
             <span
               className="icon"
               style={{
-                background: page === "doctors" ? color : "",
+                background: page === "appointments" ? color : "",
               }}
             >
               <AiFillMedicineBox />
             </span>
-            <span className="label">Contacts</span>
+            <span className="label">Appointments</span>
           </NavLink>
         </Menu.Item>
       </Menu>
