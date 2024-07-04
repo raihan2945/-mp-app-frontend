@@ -1,0 +1,58 @@
+.appointment__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 5rem;
+    align-items: center;
+}
+
+.appointment__header > h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+
+.data-table__container {
+    margin: 1rem 0;
+    padding: 1rem 0.75rem;
+    background: white;
+    border-radius: 10px;
+}
+
+.appointment__table-filter {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+
+.data-table__container .antd-input {
+    height: 1rem !important;
+}
+
+.appointment__table {
+    margin: 1.75rem 0;
+}
+
+/* form */
+
+.form__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 1rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* .form-field > input {
+    --clr-border: #1890ff;
+    border: 1px solid var(--clr-border);
+    padding: 0.25rem 0.5rem;
+} */
+
+.form-btn {
+    margin: 1rem 0;
+}

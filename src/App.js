@@ -34,6 +34,7 @@ import Campaign from "./pages/Promotion/Campaign";
 import PrivateOutlet from "./components/routing/privateOutlet";
 import PrivateRoute from "./components/routing/privateRoute";
 import Contacts from "./pages/Contacts/Contacts";
+import Appointments from "./pages/Appointments/Appointments";
 
 function App() {
   const accessToken = useSelector((state) => state?.auth?.accessToken);
@@ -61,7 +62,7 @@ function App() {
         />
         <Route exact path="/*" element={<PrivateOutlet />}>
           <Route path="dashboard" element={<Contacts />} />
-          <Route path="contacts" element={<Contacts />} />
+          <Route path="appointments" element={<Appointments />} />
         </Route>
       </Routes>
     </div>

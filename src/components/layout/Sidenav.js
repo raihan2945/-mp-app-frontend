@@ -64,16 +64,16 @@ function Sidenav({ color }) {
         </Menu.Item>
 
         <Menu.Item key="3">
-          <NavLink to="/contacts">
+          <NavLink to="/appointments">
             <span
               className="icon"
               style={{
-                background: page === "doctors" ? color : "",
+                background: page === "appointments" ? color : "",
               }}
             >
               <AiFillMedicineBox />
             </span>
-            <span className="label">Contacts</span>
+            <span className="label">Appointments</span>
           </NavLink>
         </Menu.Item>
       </Menu>
