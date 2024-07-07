@@ -1,9 +1,18 @@
-import { Table, Button, Popconfirm } from "antd";
+import { Table, Button, Popconfirm, Pagination } from "antd";
 import { useGetAppointmentsQuery } from "../../redux/features/appointment/appointmentApi";
 import { dateFormatter } from "../../utils/format";
+import { useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const AppointmentTable = () => {
-  const { data, error, isLoading } = useGetAppointmentsQuery();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(
+    Number(searchParams.get("p")) ?? 1,
+  );
+  const { data, error, isLoading } = useGetAppointmentsQuery({
+    page: currentPage,
+    limit: 10,
+  });
 
   const columns = [
     {
@@ -45,7 +54,7 @@ const AppointmentTable = () => {
       title: "Date",
       dataIndex: "created_at",
       key: "created_at",
-      render: (_, {created_at}) => `${dateFormatter(created_at)}`
+      render: (_, { created_at }) => `${dateFormatter(created_at)}`,
     },
     {
       title: "Note",
@@ -79,6 +88,16 @@ const AppointmentTable = () => {
     },
   ];
 
+  useEffect(() => {
+    console.log(data);
+  }, [isLoading]);
+
+  useEffect(() => {
+    setSearchParams({ ...searchParams, p: currentPage });
+  }, [currentPage]);
+
+
+
   if (error) return <p>Something went wrong</p>;
 
   return (
@@ -88,8 +107,18 @@ const AppointmentTable = () => {
         scroll={{ x: true }}
         rowKey={"id"}
         columns={columns}
-        dataSource={data}
+        dataSource={data?.data || []}
+        pagination={false}
       />
+
+      <div className="pagination__container">
+        <Pagination
+          defaultCurrent={currentPage}
+          current={currentPage}
+          onChange={setCurrentPage}
+          total={data?.count}
+        />
+      </div>
     </>
   );
 };

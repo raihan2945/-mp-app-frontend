@@ -61,3 +61,10 @@
     color: red;
     font-size: 12px;
 }
+
+
+.pagination__container {
+    display: flex;
+    justify-content: end;
+    margin-top: 2rem;
+}
