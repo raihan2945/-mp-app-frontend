@@ -9,6 +9,7 @@ import { useDebounce } from "../../hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 
 
+
 const { RangePicker } = DatePicker;
 
 const Appointments = () => {
@@ -73,7 +74,7 @@ const Appointments = () => {
         centered
         footer={false}
       >
-        <AppointmentForm />
+        <AppointmentForm closeModal={() => setOpen(false)} />
       </Modal>
     </>
   );

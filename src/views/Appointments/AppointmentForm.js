@@ -2,8 +2,12 @@ import { wait } from "@testing-library/user-event/dist/utils";
 import { Button } from "antd";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useCreateAppointmentMutation } from "../../redux/features/appointment/appointmentApi";
 
-const AppointmentForm = () => {
+const AppointmentForm = ({closeModal}) => {
+
+  const [createAppointment, {isSuccess, isError, isLoading, error}] = useCreateAppointmentMutation()
+
   const {
     register,
     handleSubmit,
@@ -11,8 +15,8 @@ const AppointmentForm = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    await wait(1000)
-    console.log(data);
+    await createAppointment(data)
+    closeModal()
   };
 
   return (
@@ -124,7 +128,7 @@ const AppointmentForm = () => {
           </p>
         </div>
 
-        <Button loading={isSubmitting} htmlType="submit" className="form-btn" type="primary">
+        <Button loading={isSubmitting || isLoading} htmlType="submit" className="form-btn" type="primary">
           Submit
         </Button>
       </form>
