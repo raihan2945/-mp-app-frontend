@@ -8,6 +8,7 @@ import AppointmentForm from "../../views/Appointments/AppointmentForm";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 
+
 const { RangePicker } = DatePicker;
 
 const Appointments = () => {
@@ -15,6 +16,8 @@ const Appointments = () => {
   const [search, setSearch] = useState("");
   const debounceValue = useDebounce(search);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentDate = new Date().getMonth();
 
   useEffect(() => {
     if (debounceValue.length === 0) {

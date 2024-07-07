@@ -128,7 +128,7 @@ const SignIn = () => {
                 },
               ]}
             >
-              <Input style={{ fontWeight: "400" }} placeholder="Password" />
+              <Input type='password' style={{ fontWeight: "400" }} placeholder="Password" />
             </Form.Item>
 
             {/* <Form.Item

@@ -1,21 +1,10 @@
 import { Table } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
+import { useGetAppointmentsQuery } from "../../redux/features/appointment/appointmentApi";
 
 const AppointmentTable = () => {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
+
+  const {data, error, isLoading} = useGetAppointmentsQuery()
 
   const columns = [
     {
@@ -59,9 +48,18 @@ const AppointmentTable = () => {
       key: "note",
     },
   ];
+
+  if(error) return <p>Something went wrong</p>
+
   return (
     <>
-      <Table scroll={{ x: true }} rowKey={"id"} columns={columns} dataSource={dataSource} />
+      <Table
+        loading={isLoading}
+        scroll={{ x: true }}
+        rowKey={"id"}
+        columns={columns}
+        dataSource={data}
+      />
     </>
   );
 };
