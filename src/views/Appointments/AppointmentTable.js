@@ -1,10 +1,9 @@
-import { Table } from "antd";
-import React, { useEffect } from "react";
+import { Table, Button, Popconfirm } from "antd";
 import { useGetAppointmentsQuery } from "../../redux/features/appointment/appointmentApi";
+import { dateFormatter } from "../../utils/format";
 
 const AppointmentTable = () => {
-
-  const {data, error, isLoading} = useGetAppointmentsQuery()
+  const { data, error, isLoading } = useGetAppointmentsQuery();
 
   const columns = [
     {
@@ -43,13 +42,44 @@ const AppointmentTable = () => {
       key: "address",
     },
     {
+      title: "Date",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: (_, {created_at}) => `${dateFormatter(created_at)}`
+    },
+    {
       title: "Note",
       dataIndex: "note",
       key: "note",
     },
+
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Button
+            // onClick={() => setEditContact(record)}
+            type="primary"
+            size="small"
+          >
+            Edit
+          </Button>
+          <Popconfirm
+            title="Delete the task"
+            description="Are you sure to delete this task?"
+            // onConfirm={() => deleteAContact(record?.id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger>Delete</Button>
+          </Popconfirm>
+        </div>
+      ),
+    },
   ];
 
-  if(error) return <p>Something went wrong</p>
+  if (error) return <p>Something went wrong</p>;
 
   return (
     <>
