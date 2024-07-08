@@ -1,5 +1,8 @@
 import { Table, Button, Popconfirm, Pagination } from "antd";
-import { useGetAppointmentsQuery } from "../../redux/features/appointment/appointmentApi";
+import {
+  useDeleteAppointmentMutation,
+  useGetAppointmentsQuery,
+} from "../../redux/features/appointment/appointmentApi";
 import { dateFormatter } from "../../utils/format";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -12,8 +15,10 @@ const AppointmentTable = () => {
   const { data, error, isLoading } = useGetAppointmentsQuery({
     page: currentPage || 1,
     limit: searchParams.get("size") || 10,
-    search: searchParams.get('q') || ''
+    search: searchParams.get("q") || "",
   });
+
+  const [deleteAppointment, { isSuccess, isError }] = useDeleteAppointmentMutation();
 
   const columns = [
     {
@@ -78,7 +83,7 @@ const AppointmentTable = () => {
           <Popconfirm
             title="Delete the task"
             description="Are you sure to delete this task?"
-            // onConfirm={() => deleteAContact(record?.id)}
+            onConfirm={() => deleteAppointment(record?.id)}
             okText="Yes"
             cancelText="No"
           >
@@ -89,12 +94,12 @@ const AppointmentTable = () => {
     },
   ];
 
-
   useEffect(() => {
-    setSearchParams({ size: searchParams.get('size') || 10, p: (currentPage || 1) });
+    setSearchParams({
+      size: searchParams.get("size") || 10,
+      p: currentPage || 1,
+    });
   }, [currentPage]);
-
-
 
   if (error) return <p>Something went wrong</p>;
 
@@ -115,7 +120,7 @@ const AppointmentTable = () => {
           current={currentPage}
           onChange={setCurrentPage}
           total={data?.count}
-          pageSize={searchParams.get('size')}
+          pageSize={searchParams.get("size")}
         />
       </div>
     </>

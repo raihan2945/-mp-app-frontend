@@ -7,6 +7,7 @@ import AppointmentTable from "../../views/Appointments/AppointmentTable";
 import AppointmentForm from "../../views/Appointments/AppointmentForm";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
+import { FaChevronDown } from "react-icons/fa";
 
 const { RangePicker } = DatePicker;
 
@@ -22,10 +23,9 @@ const Appointments = () => {
 
   useEffect(() => {
     if (debounceValue.length === 0) {
-      setSearchParams({ p: 1, size: size});
-
+      setSearchParams({ p: 1, size: size });
     } else {
-      setSearchParams({ q: debounceValue, p: 1, size: size});
+      setSearchParams({ q: debounceValue, p: 1, size: size });
     }
   }, [debounceValue]);
 
@@ -57,10 +57,17 @@ const Appointments = () => {
 
           <div className="data-table-inputs">
             {/* page size */}
-            <Select style={{width: "100px",}} value={size} onChange={setSize} size='large' placeholder='Select page size'>
-              <Select.Option value='10'>10</Select.Option>
-              <Select.Option value='20'>20</Select.Option>
-              <Select.Option value='50'>50</Select.Option>
+            <Select
+              style={{ width: "100px" }}
+              value={size}
+              onChange={setSize}
+              size="large"
+              placeholder="Select page size"
+              suffixIcon={<FaChevronDown />}
+            >
+              <Select.Option value="10">10</Select.Option>
+              <Select.Option value="20">20</Select.Option>
+              <Select.Option value="50">50</Select.Option>
             </Select>
 
             {/* search entities */}
