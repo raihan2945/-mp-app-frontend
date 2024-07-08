@@ -22,9 +22,10 @@ const Appointments = () => {
 
   useEffect(() => {
     if (debounceValue.length === 0) {
-      setSearchParams(searchParams.delete("q"));
+      setSearchParams({ p: 1, size: size});
+
     } else {
-      setSearchParams({ ...searchParams, q: debounceValue });
+      setSearchParams({ q: debounceValue, p: 1, size: size});
     }
   }, [debounceValue]);
 
@@ -55,11 +56,14 @@ const Appointments = () => {
           <RangePicker />
 
           <div className="data-table-inputs">
+            {/* page size */}
             <Select style={{width: "100px",}} value={size} onChange={setSize} size='large' placeholder='Select page size'>
               <Select.Option value='10'>10</Select.Option>
               <Select.Option value='20'>20</Select.Option>
               <Select.Option value='50'>50</Select.Option>
             </Select>
+
+            {/* search entities */}
             <Input
               placeholder="Search by name"
               style={{ width: "200px", padding: "0 1rem" }}
