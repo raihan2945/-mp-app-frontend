@@ -33,6 +33,12 @@
     margin: 1.75rem 0;
 }
 
+.data-table-inputs{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
 /* form */
 
 .form__container {

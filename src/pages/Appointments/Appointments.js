@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, DatePicker, Input, Modal } from "antd";
+import { Button, DatePicker, Input, Modal, Select } from "antd";
 import "./Appointment.css";
 import { IoMdAdd } from "react-icons/io";
 import { FiSearch } from "react-icons/fi";
@@ -8,8 +8,6 @@ import AppointmentForm from "../../views/Appointments/AppointmentForm";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 
-
-
 const { RangePicker } = DatePicker;
 
 const Appointments = () => {
@@ -17,6 +15,8 @@ const Appointments = () => {
   const [search, setSearch] = useState("");
   const debounceValue = useDebounce(search);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [size, setSize] = useState(searchParams.get("size") || 10);
 
   const currentDate = new Date().getMonth();
 
@@ -27,6 +27,10 @@ const Appointments = () => {
       setSearchParams({ ...searchParams, q: debounceValue });
     }
   }, [debounceValue]);
+
+  useEffect(() => {
+    setSearchParams({ p: 1, size: size });
+  }, [size]);
 
   return (
     <>
@@ -50,15 +54,22 @@ const Appointments = () => {
         <div className="appointment__table-filter">
           <RangePicker />
 
-          <Input
-            placeholder="Search by name"
-            style={{ width: "200px", padding: "0 1rem" }}
-            prefix={<FiSearch />}
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-          />
+          <div className="data-table-inputs">
+            <Select style={{width: "100px",}} value={size} onChange={setSize} size='large' placeholder='Select page size'>
+              <Select.Option value='10'>10</Select.Option>
+              <Select.Option value='20'>20</Select.Option>
+              <Select.Option value='50'>50</Select.Option>
+            </Select>
+            <Input
+              placeholder="Search by name"
+              style={{ width: "200px", padding: "0 1rem" }}
+              prefix={<FiSearch />}
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
+          </div>
         </div>
 
         {/* data table */}

@@ -7,11 +7,11 @@ import { useEffect, useState } from "react";
 const AppointmentTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(
-    Number(searchParams.get("p")) ?? 1,
+    Number(searchParams.get("p")) || 1,
   );
   const { data, error, isLoading } = useGetAppointmentsQuery({
-    page: currentPage,
-    limit: 10,
+    page: currentPage || 1,
+    limit: searchParams.get("size") || 10,
   });
 
   const columns = [
@@ -88,12 +88,9 @@ const AppointmentTable = () => {
     },
   ];
 
-  useEffect(() => {
-    console.log(data);
-  }, [isLoading]);
 
   useEffect(() => {
-    setSearchParams({ ...searchParams, p: currentPage });
+    setSearchParams({ size: searchParams.get('size') || 10, p: (currentPage || 1) });
   }, [currentPage]);
 
 
@@ -117,6 +114,7 @@ const AppointmentTable = () => {
           current={currentPage}
           onChange={setCurrentPage}
           total={data?.count}
+          pageSize={searchParams.get('size')}
         />
       </div>
     </>
