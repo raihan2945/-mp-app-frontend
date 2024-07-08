@@ -3,10 +3,10 @@ import apiSlice from "../api";
 export const appointmentApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAppointments: builder.query({
-      query: ({ page, limit }) =>
+      query: ({ page, limit, search }) =>
         `api/v1/appointment?page=${page ? page : 1}&limit=${
           limit ? limit : 10
-        }`,
+        }${search ? '&search='+search : ''}`,
       providesTags: ["appointment"],
     }),
     getAppointment: builder.query({

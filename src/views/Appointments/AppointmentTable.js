@@ -12,6 +12,7 @@ const AppointmentTable = () => {
   const { data, error, isLoading } = useGetAppointmentsQuery({
     page: currentPage || 1,
     limit: searchParams.get("size") || 10,
+    search: searchParams.get('q') || ''
   });
 
   const columns = [
