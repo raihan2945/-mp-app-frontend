@@ -3,14 +3,16 @@ import apiSlice from "../api";
 export const appointmentApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAppointments: builder.query({
-      query: ({ page, limit, search }) =>
+      query: ({ page, limit, search, start, end }) =>
         `api/v1/appointment?page=${page ? page : 1}&limit=${
           limit ? limit : 10
-        }${search ? '&search='+search : ''}`,
+        }${search ? "&search=" + search : ""}${
+          start ? "&start=" + start : ""
+        } ${end ? "&end=" + end : ""}`,
       providesTags: ["appointment"],
     }),
     getAppointment: builder.query({
-      query: ( id ) => `api/v1/appointment/${id}`,
+      query: (id) => `api/v1/appointment/${id}`,
       providesTags: ["appointment"],
     }),
     createAppointment: builder.mutation({
@@ -30,7 +32,7 @@ export const appointmentApi = apiSlice.injectEndpoints({
       invalidatesTags: ["appointment"],
     }),
     deleteAppointment: builder.mutation({
-      query: ( id ) => ({
+      query: (id) => ({
         url: "api/v1/appointment/" + id,
         method: "DELETE",
       }),

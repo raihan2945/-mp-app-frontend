@@ -8,36 +8,47 @@ import AppointmentForm from "../../views/Appointments/AppointmentForm";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
-import useUpdateEffect from "../../hooks/useUpdateEffect";
+import { dateFormatter } from "../../utils/format";
 
 const { RangePicker } = DatePicker;
 
 const Appointments = () => {
-  const firstRenderRef = useRef(true)
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [dateRange, setDateRange] = useState([]);
   const debounceValue = useDebounce(search);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [size, setSize] = useState(searchParams.get("size") || 10);
 
-  const currentDate = new Date().getMonth();
-
   useEffect(() => {
-    if(debounceValue.length != 0) {
+    if (debounceValue.length != 0) {
       setSearchParams({ q: debounceValue, p: 1, size: size });
     } else {
-      setSearchParams(searchParams.delete('q'))
+      setSearchParams(searchParams.delete("q"));
     }
   }, [debounceValue]);
 
   useEffect(() => {
-    if(size != 10) {
+    if (size != 10) {
       setSearchParams({ p: 1, size: size });
     } else {
-      setSearchParams(searchParams.delete('size'));
+      setSearchParams(searchParams.delete("size"));
     }
   }, [size]);
+
+  useEffect(() => {
+    if (dateRange != null && dateRange[0] != null) {
+      setSearchParams({
+        p: 1,
+        size: 10,
+        start: dateFormatter(dateRange[0]._d),
+        end: dateFormatter(dateRange[1] ? dateRange[1]._d : dateRange[0]._d ),
+      });
+    } else {
+      setSearchParams(searchParams.delete('start'))
+    }
+  }, [dateRange]);
 
   return (
     <>
@@ -59,7 +70,11 @@ const Appointments = () => {
       <div className="data-table__container">
         {/* data table filters and sorting */}
         <div className="appointment__table-filter">
-          <RangePicker />
+          <RangePicker
+            onCalendarChange={(value) => {
+              setDateRange(value);
+            }}
+          />
 
           <div className="data-table-inputs">
             {/* page size */}

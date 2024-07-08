@@ -8,7 +8,6 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AppointmentForm from "./AppointmentForm";
 
-
 const AppointmentTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(
@@ -21,10 +20,11 @@ const AppointmentTable = () => {
     page: currentPage || 1,
     limit: searchParams.get("size") || 10,
     search: searchParams.get("q") || "",
+    start: searchParams.get("start") || "",
+    end: searchParams.get("end") || "",
   });
 
   const [deleteAppointment] = useDeleteAppointmentMutation();
-
 
   const columns = [
     {
@@ -101,28 +101,28 @@ const AppointmentTable = () => {
   ];
 
   useEffect(() => {
-   if( currentPage != 1 ){
+    if (searchParams.has("q")) {
+      setSearchParams({
+        p: currentPage,
+        size: searchParams.get("size") || 10,
+        q: searchParams.get("q"),
+      });
+    } else if (searchParams.has("start") && searchParams.has("end")) {
+      setSearchParams({
+        p: currentPage,
+        size: searchParams.get("size") || 10,
+        start: searchParams.get("start"),
+        end: searchParams.get("end"),
+      });
+    } else {
       setSearchParams({
         p: currentPage,
         size: searchParams.get("size") || 10,
       });
-    } else {
-      setSearchParams(searchParams.delete('p'))
     }
-    
   }, [currentPage]);
 
-  useEffect(() => {
-    if( currentPage != 1 ){
-       setSearchParams({
-         p: currentPage,
-         size: searchParams.get("size") || 10,
-       });
-     } else {
-       setSearchParams(searchParams.delete('p'))
-     }
-     
-   }, [currentPage]);
+
 
   if (error) return <p>Something went wrong</p>;
 
