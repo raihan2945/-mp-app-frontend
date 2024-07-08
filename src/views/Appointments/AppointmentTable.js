@@ -1,4 +1,4 @@
-import { Table, Button, Popconfirm, Pagination } from "antd";
+import { Table, Button, Popconfirm, Pagination, Modal } from "antd";
 import {
   useDeleteAppointmentMutation,
   useGetAppointmentsQuery,
@@ -6,19 +6,25 @@ import {
 import { dateFormatter } from "../../utils/format";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import AppointmentForm from "./AppointmentForm";
+
 
 const AppointmentTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(
     Number(searchParams.get("p")) || 1,
   );
+
+  const [editAppointment, setEditAppointment] = useState();
+
   const { data, error, isLoading } = useGetAppointmentsQuery({
     page: currentPage || 1,
     limit: searchParams.get("size") || 10,
     search: searchParams.get("q") || "",
   });
 
-  const [deleteAppointment, { isSuccess, isError }] = useDeleteAppointmentMutation();
+  const [deleteAppointment] = useDeleteAppointmentMutation();
+
 
   const columns = [
     {
@@ -74,7 +80,7 @@ const AppointmentTable = () => {
       render: (_, record) => (
         <div style={{ display: "flex", gap: "10px" }}>
           <Button
-            // onClick={() => setEditContact(record)}
+            onClick={() => setEditAppointment(record)}
             type="primary"
             size="small"
           >
@@ -95,11 +101,28 @@ const AppointmentTable = () => {
   ];
 
   useEffect(() => {
-    setSearchParams({
-      size: searchParams.get("size") || 10,
-      p: currentPage || 1,
-    });
+   if( currentPage != 1 ){
+      setSearchParams({
+        p: currentPage,
+        size: searchParams.get("size") || 10,
+      });
+    } else {
+      setSearchParams(searchParams.delete('p'))
+    }
+    
   }, [currentPage]);
+
+  useEffect(() => {
+    if( currentPage != 1 ){
+       setSearchParams({
+         p: currentPage,
+         size: searchParams.get("size") || 10,
+       });
+     } else {
+       setSearchParams(searchParams.delete('p'))
+     }
+     
+   }, [currentPage]);
 
   if (error) return <p>Something went wrong</p>;
 
@@ -120,9 +143,22 @@ const AppointmentTable = () => {
           current={currentPage}
           onChange={setCurrentPage}
           total={data?.count}
-          pageSize={searchParams.get("size")}
+          pageSize={searchParams.get("size") || 10}
         />
       </div>
+
+      {/* update appointment modal */}
+      <Modal
+        centered
+        open={editAppointment}
+        onCancel={() => setEditAppointment("")}
+        footer={false}
+      >
+        <AppointmentForm
+          appointment={editAppointment}
+          closeModal={() => setEditAppointment("")}
+        />
+      </Modal>
     </>
   );
 };

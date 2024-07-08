@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, DatePicker, Input, Modal, Select } from "antd";
 import "./Appointment.css";
 import { IoMdAdd } from "react-icons/io";
@@ -8,10 +8,12 @@ import AppointmentForm from "../../views/Appointments/AppointmentForm";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
+import useUpdateEffect from "../../hooks/useUpdateEffect";
 
 const { RangePicker } = DatePicker;
 
 const Appointments = () => {
+  const firstRenderRef = useRef(true)
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const debounceValue = useDebounce(search);
@@ -22,15 +24,19 @@ const Appointments = () => {
   const currentDate = new Date().getMonth();
 
   useEffect(() => {
-    if (debounceValue.length === 0) {
-      setSearchParams({ p: 1, size: size });
-    } else {
+    if(debounceValue.length != 0) {
       setSearchParams({ q: debounceValue, p: 1, size: size });
+    } else {
+      setSearchParams(searchParams.delete('q'))
     }
   }, [debounceValue]);
 
   useEffect(() => {
-    setSearchParams({ p: 1, size: size });
+    if(size != 10) {
+      setSearchParams({ p: 1, size: size });
+    } else {
+      setSearchParams(searchParams.delete('size'));
+    }
   }, [size]);
 
   return (

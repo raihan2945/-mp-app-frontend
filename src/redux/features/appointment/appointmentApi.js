@@ -10,7 +10,7 @@ export const appointmentApi = apiSlice.injectEndpoints({
       providesTags: ["appointment"],
     }),
     getAppointment: builder.query({
-      query: ({ id }) => `api/v1/appointment/${id}`,
+      query: ( id ) => `api/v1/appointment/${id}`,
       providesTags: ["appointment"],
     }),
     createAppointment: builder.mutation({

@@ -1,22 +1,46 @@
 import { Button } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useCreateAppointmentMutation } from "../../redux/features/appointment/appointmentApi";
+import {
+  useCreateAppointmentMutation,
+  useUpdateAppointmentMutation,
+} from "../../redux/features/appointment/appointmentApi";
 
-const AppointmentForm = ({closeModal}) => {
-
-  const [createAppointment, {isSuccess, isError, isLoading, error}] = useCreateAppointmentMutation()
+const AppointmentForm = ({ closeModal, appointment }) => {
+  const [createAppointment, { isSuccess, isError, isLoading, error }] =
+    useCreateAppointmentMutation();
+  const [updateAppointment, { isLoading: isUpdatting }] =
+    useUpdateAppointmentMutation();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm();
+    setValue,
+  } = useForm({
+    defaultValues: {},
+  });
 
   const onSubmit = async (data) => {
-    await createAppointment(data)
-    closeModal()
+    if (appointment) {
+      updateAppointment({ id: appointment.id, data: data });
+    } else {
+      await createAppointment(data);
+    }
+    closeModal();
   };
+
+  useEffect(() => {
+    if (appointment) {
+      setValue("full_name", appointment.full_name);
+      setValue("mobile", appointment.mobile);
+      setValue("address", appointment.address);
+      setValue("company_name", appointment.company_name);
+      setValue("company_location", appointment.company_location);
+      setValue("degination", appointment.degination);
+      setValue("note", appointment.note);
+    }
+  }, [appointment]);
 
   return (
     <>
@@ -127,7 +151,12 @@ const AppointmentForm = ({closeModal}) => {
           </p>
         </div>
 
-        <Button loading={isSubmitting || isLoading} htmlType="submit" className="form-btn" type="primary">
+        <Button
+          loading={isSubmitting || isLoading || isUpdatting}
+          htmlType="submit"
+          className="form-btn"
+          type="primary"
+        >
           Submit
         </Button>
       </form>
