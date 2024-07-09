@@ -165,7 +165,7 @@ const ContactForm = ({
             value={watch("first_name")}
             {...register("first_name")}
             type="text"
-            class="form-control"
+            className="ant-input form-control"
           />
         </Form.Item>
         <Form.Item label="Designation" style={{ marginBottom: "5px" }}>
@@ -173,7 +173,7 @@ const ContactForm = ({
             value={watch("last_name")}
             {...register("last_name")}
             type="text"
-            class="form-control"
+            className="form-control ant-input"
           />
         </Form.Item>
         <Form.Item label="Mobile" style={{ marginBottom: "5px" }}>
@@ -181,7 +181,7 @@ const ContactForm = ({
             value={watch("mobile")}
             {...register("mobile")}
             type="text"
-            class="form-control"
+            className="ant-input form-control"
           />
         </Form.Item>
 
@@ -209,27 +209,27 @@ const ContactForm = ({
         </Form.Item>
 
         <Form.Item label="Office" style={{ marginBottom: "5px" }}>
-          <input {...register("office")} type="text" class="form-control" />
+          <input {...register("office")} type="text" className="form-control ant-input" />
         </Form.Item>
 
         <Form.Item label="Address" style={{ marginBottom: "5px" }}>
-          <input {...register("address")} type="text" class="form-control" />
+          <input {...register("address")} type="text" className="form-control ant-input" />
         </Form.Item>
 
         <Form.Item label="Address 2" style={{ marginBottom: "5px" }}>
-          <input {...register("address_2")} type="text" class="form-control" />
+          <input {...register("address_2")} type="text" class="form-control ant-input" />
         </Form.Item>
 
         <Form.Item label="Email" style={{ marginBottom: "5px" }}>
-          <input {...register("email")} type="text" class="form-control" />
+          <input {...register("email")} type="text" class="form-control ant-input" />
         </Form.Item>
 
         <Form.Item label="Company" style={{ marginBottom: "5px" }}>
-          <input {...register("email")} type="text" class="form-control" />
+          <input {...register("email")} type="text" class="form-control ant-input" />
         </Form.Item>
 
         <Form.Item label="Union" style={{ marginBottom: "5px" }}>
-          <input {...register("union")} type="text" class="form-control" />
+          <input {...register("union")} type="text" class="form-control ant-input" />
         </Form.Item>
 
         <Form.Item label="Division" style={{ marginBottom: "5px" }}>

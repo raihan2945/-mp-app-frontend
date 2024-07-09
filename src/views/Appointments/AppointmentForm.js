@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -57,13 +57,13 @@ const AppointmentForm = ({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h5>Add Appointment</h5>
+        <h5 className="form-header">Add Appointment</h5>
 
         <div className="form__container">
           <p className="form-field">
             <label htmlFor="full_name">Full Name</label>
             <input
-              className="form-control"
+              className="ant-input form-control"
               type="text"
               {...register("full_name", {
                 required: "Full name is required",
@@ -79,7 +79,7 @@ const AppointmentForm = ({
           <p className="form-field">
             <label htmlFor="mobile">Mobile</label>
             <input
-              className="form-control"
+              className="form-control ant-input "
               type="number"
               {...register("mobile", {
                 required: "Mobile number is required",
@@ -99,7 +99,7 @@ const AppointmentForm = ({
           <p className="form-field">
             <label htmlFor="company_name">Company Name</label>
             <input
-              className="form-control"
+              className="form-control ant-input"
               type="text"
               {...register("company_name")}
               id="company_name"
@@ -110,7 +110,7 @@ const AppointmentForm = ({
           <p className="form-field">
             <label htmlFor="company_location">Company Location</label>
             <input
-              className="form-control"
+              className="form-control ant-input"
               type="text"
               {...register("company_location")}
               id="company_location"
@@ -121,7 +121,7 @@ const AppointmentForm = ({
           <p className="form-field">
             <label htmlFor="designation">Designation </label>
             <input
-              className="form-control"
+              className="form-control ant-input"
               type="text"
               {...register("designation")}
               id="designation"
@@ -132,7 +132,7 @@ const AppointmentForm = ({
           <p className="form-field">
             <label htmlFor="address">Address </label>
             <input
-              className="form-control"
+              className="form-control ant-input"
               type="text"
               {...register("address")}
               id="address"
@@ -143,7 +143,7 @@ const AppointmentForm = ({
           <p className="form-field">
             <label htmlFor="reference">Reference </label>
             <input
-              className="form-control"
+              className="form-control ant-input"
               type="text"
               {...register("reference")}
               id="reference"
@@ -154,7 +154,7 @@ const AppointmentForm = ({
           <p className="form-field">
             <label htmlFor="note">Note</label>
             <input
-              className="form-control"
+              className="form-control ant-input"
               type="text"
               {...register("note")}
               id="note"
