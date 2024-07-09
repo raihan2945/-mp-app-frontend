@@ -10,14 +10,11 @@ import AppointmentForm from "./AppointmentForm";
 
 const AppointmentTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(
-    Number(searchParams.get("p")) || 1,
-  );
 
   const [editAppointment, setEditAppointment] = useState();
 
   const { data, error, isLoading } = useGetAppointmentsQuery({
-    page: currentPage || 1,
+    page: searchParams.get('p') || 1,
     limit: searchParams.get("size") || 10,
     search: searchParams.get("q") || "",
     start: searchParams.get("start") || "",
@@ -100,30 +97,7 @@ const AppointmentTable = () => {
     },
   ];
 
-  useEffect(() => {
-    if (searchParams.has("q")) {
-      setSearchParams({
-        p: currentPage,
-        size: searchParams.get("size") || 10,
-        q: searchParams.get("q"),
-      });
-    } else if (searchParams.has("start") && searchParams.has("end")) {
-      setSearchParams({
-        p: currentPage,
-        size: searchParams.get("size") || 10,
-        start: searchParams.get("start"),
-        end: searchParams.get("end"),
-      });
-    } else {
-      setSearchParams({
-        p: currentPage,
-        size: searchParams.get("size") || 10,
-      });
-    }
-  }, [currentPage]);
-
-
-
+  
   if (error) return <p>Something went wrong</p>;
 
   return (
@@ -139,9 +113,12 @@ const AppointmentTable = () => {
 
       <div className="pagination__container">
         <Pagination
-          defaultCurrent={currentPage}
-          current={currentPage}
-          onChange={setCurrentPage}
+          defaultCurrent={searchParams.get('p') || 1}
+          current={Number(searchParams.get('p') || 1)}
+          onChange={(value) => {
+            searchParams.set('p', value)
+            setSearchParams(searchParams)
+          }}
           total={data?.count}
           pageSize={searchParams.get("size") || 10}
         />

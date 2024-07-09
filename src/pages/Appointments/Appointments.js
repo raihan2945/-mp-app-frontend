@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, DatePicker, Input, Modal, Select } from "antd";
+import { Button, DatePicker, Input, message, Modal, Select } from "antd";
 import "./Appointment.css";
 import { IoMdAdd } from "react-icons/io";
 import { FiSearch } from "react-icons/fi";
@@ -15,43 +15,40 @@ const { RangePicker } = DatePicker;
 const Appointments = () => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [dateRange, setDateRange] = useState([]);
   const debounceValue = useDebounce(search);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [size, setSize] = useState(searchParams.get("size") || 10);
+  const [messageApi, contextHolder] = message.useMessage();
+
+  //* : MESSAGES
+  const success = (message) => {
+    messageApi.open({
+      type: "success",
+      content: message || "Success",
+    });
+  };
+
+  const error = (message) => {
+    messageApi.open({
+      type: "error",
+      content: message || "Error",
+    });
+  };
 
   useEffect(() => {
     if (debounceValue.length != 0) {
-      setSearchParams({ q: debounceValue, p: 1, size: size });
+      searchParams.set("p", 1);
+      searchParams.set("q", debounceValue);
     } else {
-      setSearchParams(searchParams.delete("q"));
+      searchParams.delete("q");
     }
+    setSearchParams(searchParams);
   }, [debounceValue]);
-
-  useEffect(() => {
-    if (size != 10) {
-      setSearchParams({ p: 1, size: size });
-    } else {
-      setSearchParams(searchParams.delete("size"));
-    }
-  }, [size]);
-
-  useEffect(() => {
-    if (dateRange != null && dateRange[0] != null) {
-      setSearchParams({
-        p: 1,
-        size: 10,
-        start: dateFormatter(dateRange[0]._d),
-        end: dateFormatter(dateRange[1] ? dateRange[1]._d : dateRange[0]._d ),
-      });
-    } else {
-      setSearchParams(searchParams.delete('start'))
-    }
-  }, [dateRange]);
 
   return (
     <>
+      {contextHolder}
+
       {/* header */}
       <div className="appointment__header">
         <h2>Appointments</h2>
@@ -72,7 +69,17 @@ const Appointments = () => {
         <div className="appointment__table-filter">
           <RangePicker
             onCalendarChange={(value) => {
-              setDateRange(value);
+              if (value !== null && value[0] != null && value[1] != null) {
+                searchParams.set("p", 1);
+                searchParams.delete("q");
+                searchParams.set("start", dateFormatter(value[0]._d));
+                searchParams.set("end", dateFormatter(value[1]._d));
+              } else {
+                searchParams.delete("start");
+                searchParams.delete("end");
+              }
+
+              setSearchParams(searchParams);
             }}
           />
 
@@ -80,8 +87,12 @@ const Appointments = () => {
             {/* page size */}
             <Select
               style={{ width: "100px" }}
-              value={size}
-              onChange={setSize}
+              value={searchParams.get("size")}
+              onChange={(value) => {
+                searchParams.set("p", 1);
+                searchParams.set("size", value);
+                setSearchParams(searchParams);
+              }}
               size="large"
               placeholder="Select page size"
               suffixIcon={<FaChevronDown />}
@@ -117,7 +128,9 @@ const Appointments = () => {
         centered
         footer={false}
       >
-        <AppointmentForm closeModal={() => setOpen(false)} />
+        <AppointmentForm
+          closeModal={() => setOpen(false)}
+        />
       </Modal>
     </>
   );

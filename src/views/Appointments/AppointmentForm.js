@@ -6,11 +6,21 @@ import {
   useUpdateAppointmentMutation,
 } from "../../redux/features/appointment/appointmentApi";
 
-const AppointmentForm = ({ closeModal, appointment }) => {
+const AppointmentForm = ({
+  closeModal,
+  appointment,
+}) => {
   const [createAppointment, { isSuccess, isError, isLoading, error }] =
     useCreateAppointmentMutation();
-  const [updateAppointment, { isLoading: isUpdatting }] =
-    useUpdateAppointmentMutation();
+  const [
+    updateAppointment,
+    {
+      isLoading: isUpdatting,
+      isSuccess: isSuccessUpdating,
+      isError: isErrorUpdating,
+      error: errorUpdating,
+    },
+  ] = useUpdateAppointmentMutation();
 
   const {
     register,
@@ -27,6 +37,8 @@ const AppointmentForm = ({ closeModal, appointment }) => {
     } else {
       await createAppointment(data);
     }
+
+
     closeModal();
   };
 
