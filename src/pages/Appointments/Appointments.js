@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button, DatePicker, Input, message, Modal, Select } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, DatePicker, Input, Modal, Select } from "antd";
 import "./Appointment.css";
 import { IoMdAdd } from "react-icons/io";
 import { FiSearch } from "react-icons/fi";
@@ -18,22 +18,7 @@ const Appointments = () => {
   const debounceValue = useDebounce(search);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [messageApi, contextHolder] = message.useMessage();
-
-  //* : MESSAGES
-  const success = (message) => {
-    messageApi.open({
-      type: "success",
-      content: message || "Success",
-    });
-  };
-
-  const error = (message) => {
-    messageApi.open({
-      type: "error",
-      content: message || "Error",
-    });
-  };
+  
 
   useEffect(() => {
     if (debounceValue.length != 0) {
@@ -47,8 +32,6 @@ const Appointments = () => {
 
   return (
     <>
-      {contextHolder}
-
       {/* header */}
       <div className="appointment__header">
         <h2>Appointments</h2>
