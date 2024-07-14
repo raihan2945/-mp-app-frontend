@@ -1,31 +1,3 @@
-/* body {
-  margin: 0;
-  padding: 0;
-  background-color: #fafafa;
-  font: 12pt "Tahoma";
-} */
-
-/* @media all {
-  .page-break {
-    display: none;
-  }
-} */
-
-/* @media print {
-  html, body {
-    height: initial !important;
-    overflow: initial !important;
-    -webkit-print-color-adjust: exact;
-  }
-} */
-
-/* @media print {
-  .page-break {
-    display: block;
-    page-break-before: auto;
-  }
-} */
-
-/* @page {
-  size: A4;
-} */
+.ant-input.form-control {
+  color: black;
+}
