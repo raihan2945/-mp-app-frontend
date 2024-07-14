@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Button, DatePicker, Input, Modal, Select } from "antd";
+import { DatePicker, Input, Select } from "antd";
 import "./Appointment.css";
-import { IoMdAdd } from "react-icons/io";
-import { AiOutlineDownload } from "react-icons/ai";
+
 import { FiSearch } from "react-icons/fi";
 import AppointmentTable from "../../views/Appointments/AppointmentTable";
-import AppointmentForm from "../../views/Appointments/AppointmentForm";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
 import { dateFormatter } from "../../utils/format";
+import AppointmentHeader from "../../views/Appointments/AppointmentHeader";
 
 const { RangePicker } = DatePicker;
 
 const Appointments = () => {
-  const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const debounceValue = useDebounce(search);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -29,47 +27,23 @@ const Appointments = () => {
     setSearchParams(searchParams);
   }, [debounceValue]);
 
+ 
+
   return (
     <>
       {/* header */}
-      <div className="appointment__header">
-        <h2>Appointments</h2>
-
-        <div className="buttons">
-          <Button
-            type='default'
-            size='middle'
-            icon={<AiOutlineDownload size={16} />}
-            iconPosition={'end'}
-            onClick={() => {
-              setOpen(true);
-            }}
-          >
-            CSV
-          </Button>
-          <Button
-            type="primary"
-            size='middle'
-            icon={<IoMdAdd size={16} />}
-            onClick={() => {
-              setOpen(true);
-            }}
-          >
-            Add
-          </Button>
-        </div>
-      </div>
+      <AppointmentHeader />
 
       <div className="data-table__container">
         {/* data table filters and sorting */}
         <div className="appointment__table-filter">
           <RangePicker
             onCalendarChange={(value) => {
-              if (value !== null && value[0] != null && value[1] != null) {
+              if (value != null && value[0] != null && value[1] != null) {
                 searchParams.set("p", 1);
                 searchParams.delete("q");
-                searchParams.set("start", dateFormatter(value[0]._d));
-                searchParams.set("end", dateFormatter(value[1]._d));
+                searchParams.set("start", dateFormatter(value[0].$d));
+                searchParams.set("end", dateFormatter(value[1].$d));
               } else {
                 searchParams.delete("start");
                 searchParams.delete("end");
@@ -117,17 +91,7 @@ const Appointments = () => {
         </div>
       </div>
 
-      {/* form modal */}
-      <Modal
-        open={open}
-        onCancel={() => setOpen(false)}
-        centered
-        footer={false}
-        width={"70%"}
-        title='Add Appointment'
-      >
-        <AppointmentForm closeModal={() => setOpen(false)} />
-      </Modal>
+      
     </>
   );
 };

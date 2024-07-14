@@ -11,6 +11,13 @@ export const appointmentApi = apiSlice.injectEndpoints({
         } ${end ? "&end=" + end : ""}`,
       providesTags: ["appointment"],
     }),
+    getAllAppointment: builder.query({
+      query: ({ start, end }) =>
+        `api/v1/appointment?${
+          start ? "&start=" + start : ""
+        } ${end ? "&end=" + end : ""}`,
+      providesTags: ["appointment"],
+    }),
     getAppointment: builder.query({
       query: (id) => `api/v1/appointment/${id}`,
       providesTags: ["appointment"],
@@ -47,4 +54,5 @@ export const {
   useDeleteAppointmentMutation,
   useGetAppointmentQuery,
   useUpdateAppointmentMutation,
+  useGetAllAppointmentQuery
 } = appointmentApi;
