@@ -57,8 +57,6 @@ const AppointmentForm = ({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h5 className="form-header">Add Appointment</h5>
-
         <div className="form__container">
           <p className="form-field">
             <label htmlFor="full_name">Full Name</label>

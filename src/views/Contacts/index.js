@@ -652,6 +652,16 @@ const ContactsView = ({ success, error }) => {
         onCancel={() => cancelContactFormModal()}
         width={"70%"}
         footer={null}
+        centered
+        styles={{
+          body: {
+            height: '85vh',
+            paddingInline: '1rem',
+            marginTop: '1.5rem',
+            overflowY: 'auto',
+            overflowX: 'hidden',
+          }
+        }}
       >
         {createContact ? (
           <CreateContactForm

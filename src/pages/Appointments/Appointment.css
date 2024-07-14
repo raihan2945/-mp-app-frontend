@@ -10,6 +10,11 @@
     font-weight: 700;
 }
 
+.appointment__header > .buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
 
 .data-table__container {
     margin: 1rem 0;
@@ -47,8 +52,10 @@
 }
 
 .form__container {
-    display: flex;
-    flex-direction: column;
+    padding: 0.25rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 1rem;
 }
 
 .form-field {

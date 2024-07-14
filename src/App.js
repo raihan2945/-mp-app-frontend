@@ -7,7 +7,6 @@ import SignIn from "./pages/SignIn";
 
 import './App.css'
 
-import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 

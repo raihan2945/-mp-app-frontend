@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, DatePicker, Input, Modal, Select } from "antd";
 import "./Appointment.css";
 import { IoMdAdd } from "react-icons/io";
+import { AiOutlineDownload } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import AppointmentTable from "../../views/Appointments/AppointmentTable";
 import AppointmentForm from "../../views/Appointments/AppointmentForm";
@@ -18,8 +19,6 @@ const Appointments = () => {
   const debounceValue = useDebounce(search);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  
-
   useEffect(() => {
     if (debounceValue.length != 0) {
       searchParams.set("p", 1);
@@ -35,16 +34,30 @@ const Appointments = () => {
       {/* header */}
       <div className="appointment__header">
         <h2>Appointments</h2>
-        <Button
-          type="primary"
-          size="medium"
-          icon={<IoMdAdd />}
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          Add
-        </Button>
+
+        <div className="buttons">
+          <Button
+            type='default'
+            size='middle'
+            icon={<AiOutlineDownload size={16} />}
+            iconPosition={'end'}
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            CSV
+          </Button>
+          <Button
+            type="primary"
+            size='middle'
+            icon={<IoMdAdd size={16} />}
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            Add
+          </Button>
+        </div>
       </div>
 
       <div className="data-table__container">
@@ -110,10 +123,10 @@ const Appointments = () => {
         onCancel={() => setOpen(false)}
         centered
         footer={false}
+        width={"70%"}
+        title='Add Appointment'
       >
-        <AppointmentForm
-          closeModal={() => setOpen(false)}
-        />
+        <AppointmentForm closeModal={() => setOpen(false)} />
       </Modal>
     </>
   );

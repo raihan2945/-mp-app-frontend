@@ -130,6 +130,8 @@ const AppointmentTable = () => {
         open={editAppointment}
         onCancel={() => setEditAppointment("")}
         footer={false}
+        width={"70%"}
+        title='Update Appointment'
       >
         <AppointmentForm
           appointment={editAppointment}
