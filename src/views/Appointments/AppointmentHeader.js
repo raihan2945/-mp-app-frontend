@@ -39,9 +39,7 @@ const AppointmentHeader = () => {
           <CSVLink
             data={data ? data.data : []}
             headers={headers}
-            filename={`appointments-${searchParams.get(
-              "start",
-            )}-${searchParams.get("end")}`}
+            filename={`appointments-${searchParams.has('start') ? `${searchParams.get('start')}-${searchParams.get('end')}` : `all`}`}
           >
             <Button
               type="default"
