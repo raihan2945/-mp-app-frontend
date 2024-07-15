@@ -19,6 +19,7 @@ const AppointmentTable = () => {
   const debounceValue = useDebounce(search);
   const [searchParams, setSearchParams] = useSearchParams();
   const [editAppointment, setEditAppointment] = useState();
+  const [viewAppointment, setViewAppointment] = useState();
 
   const [deleteAppointment] = useDeleteAppointmentMutation();
 
@@ -62,37 +63,27 @@ const AppointmentTable = () => {
       key: "company_name",
     },
     {
-      title: "Company Location",
-      dataIndex: "company_location",
-      key: "company_location",
-    },
-    {
       title: "Designation",
       dataIndex: "designation",
       key: "designation",
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-    },
-    {
       title: "Date",
-      dataIndex: "created_at",
-      key: "created_at",
-      render: (_, { created_at }) => `${dateFormatter(created_at)}`,
+      dataIndex: "start",
+      key: "start",
+      render: (_, { start }) => `${dateFormatter(start)}`,
     },
-    {
-      title: "Note",
-      dataIndex: "note",
-      key: "note",
-    },
-
     {
       title: "Action",
       key: "action",
       render: (_, record) => (
         <div style={{ display: "flex", gap: "10px" }}>
+          <Button
+            onClick={() => setViewAppointment(record)}
+            size="small"
+          >
+            View
+          </Button>
           <Button
             onClick={() => setEditAppointment(record)}
             type="primary"
@@ -205,6 +196,18 @@ const AppointmentTable = () => {
             appointment={editAppointment}
             closeModal={() => setEditAppointment("")}
           />
+        </Modal>
+
+        {/* View appointment modal */}
+        <Modal
+          centered
+          open={viewAppointment}
+          onCancel={() => setViewAppointment("")}
+          footer={false}
+          width={"70%"}
+          title="Appointment Detail"
+        >
+          {JSON.stringify(viewAppointment)}
         </Modal>
       </div>
     </>
