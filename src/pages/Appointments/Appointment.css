@@ -5,12 +5,12 @@
     align-items: center;
 }
 
-.appointment__header > h2 {
+.appointment__header>h2 {
     font-size: 1.75rem;
     font-weight: 700;
 }
 
-.appointment__header > .buttons {
+.appointment__header>.buttons {
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -38,7 +38,7 @@
     margin: 1.75rem 0;
 }
 
-.data-table-inputs{
+.data-table-inputs {
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -86,3 +86,18 @@
     justify-content: end;
     margin-top: 2rem;
 }
+
+
+/* calender */
+.sx-react-calendar-wrapper {
+    width: 100%;
+    height: 800px;
+    max-height: 90vh;
+}
+
+
+.sx__time-grid-event.sx__event {
+    height: auto !important;
+}
+
+

@@ -14,6 +14,8 @@ import PrivateOutlet from "./components/routing/privateOutlet";
 import PrivateRoute from "./components/routing/privateRoute";
 import Contacts from "./pages/Contacts/Contacts";
 import Appointments from "./pages/Appointments/Appointments";
+import AppointmentTable from "./views/Appointments/AppointmentTable";
+import AppointmentCalender from "./views/Appointments/AppointmentCalender";
 
 function App() {
   const accessToken = useSelector((state) => state?.auth?.accessToken);
@@ -41,7 +43,10 @@ function App() {
         />
         <Route exact path="/*" element={<PrivateOutlet />}>
           <Route path="dashboard" element={<Contacts />} />
-          <Route path="appointments" element={<Appointments />} />
+          <Route path="appointments" element={<Appointments />} >
+            <Route path="" element={<AppointmentTable />} />
+            <Route path="calender" element={<AppointmentCalender />} />
+          </Route>
         </Route>
       </Routes>
     </div>
