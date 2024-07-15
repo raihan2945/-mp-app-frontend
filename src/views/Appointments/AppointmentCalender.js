@@ -6,7 +6,7 @@ import {
   viewMonthAgenda,
 } from '@schedule-x/calendar'
 import { createEventModalPlugin } from '@schedule-x/event-modal' 
-import '@schedule-x/theme-default/dist/index.css'
+import './Calender.css'
 
  
 function AppointmentCalender() {
