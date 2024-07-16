@@ -81,6 +81,7 @@ const SearchBar = ({
           <div>
             <Search
               placeholder="Search"
+              size='large'
               onChange={(e) => {
                 let value = e.target.value;
                 let newValue;
@@ -94,7 +95,7 @@ const SearchBar = ({
                 handleChange("search", newValue);
               }}
               enterButton
-              style={{ minWidth: 300, fontWeight: "400" }}
+              
             />
           </div>
         </div>
