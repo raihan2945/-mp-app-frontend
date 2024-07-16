@@ -7,6 +7,7 @@ import AppointmentForm from "../../views/Appointments/AppointmentForm";
 import { AiOutlineDownload } from "react-icons/ai";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useGetAllAppointmentQuery } from "../../redux/features/appointment/appointmentApi";
+import { AiOutlineSchedule } from "react-icons/ai";
 
 const AppointmentHeader = () => {
   const [open, setOpen] = useState(false);
@@ -35,7 +36,10 @@ const AppointmentHeader = () => {
   return (
     <>
       <div className="appointment__header">
-        <h2>Appointments</h2>
+        <h2>
+          <AiOutlineSchedule className="icon" />
+          <span>Appointments</span>
+        </h2>
 
         <div className="buttons">
           <Link
