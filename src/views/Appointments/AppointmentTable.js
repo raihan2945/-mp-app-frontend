@@ -11,6 +11,7 @@ import { FaChevronDown } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { DatePicker, Input, Select } from "antd";
 import { useDebounce } from "../../hooks/useDebounce";
+import AppointmentDetails from "./AppointmentDetails";
 
 const { RangePicker } = DatePicker;
 
@@ -78,10 +79,7 @@ const AppointmentTable = () => {
       key: "action",
       render: (_, record) => (
         <div style={{ display: "flex", gap: "10px" }}>
-          <Button
-            onClick={() => setViewAppointment(record)}
-            size="small"
-          >
+          <Button onClick={() => setViewAppointment(record)} size="small">
             View
           </Button>
           <Button
@@ -205,9 +203,8 @@ const AppointmentTable = () => {
           onCancel={() => setViewAppointment("")}
           footer={false}
           width={"70%"}
-          title="Appointment Detail"
         >
-          {JSON.stringify(viewAppointment)}
+          {viewAppointment ? <AppointmentDetails data={viewAppointment} /> : <p>loading...</p>}
         </Modal>
       </div>
     </>
