@@ -27,7 +27,7 @@
   --sx-color-on-primary: #fff;
   --sx-color-primary-container: #badeff;
   --sx-color-on-primary-container: #001c5e;
-  --sx-color-secondary: #625b71;
+  --sx-color-secondary: rgb(91, 102, 113);
   --sx-color-on-secondary: #fff;
   --sx-color-secondary-container: #e8def8;
   --sx-color-on-secondary-container: #1e192b;
@@ -36,7 +36,7 @@
   --sx-color-tertiary-container: #ffd8e4;
   --sx-color-on-tertiary-container: #370b1e;
   --sx-color-surface: #fef7ff;
-  --sx-color-surface-dim: #ded8e1;
+  --sx-color-surface-dim: #d9dff4;
   --sx-color-surface-bright: #fef7ff;
   --sx-color-on-surface: #1c1b1f;
   --sx-color-surface-container: #f3edf7;

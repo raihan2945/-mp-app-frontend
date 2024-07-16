@@ -1,3 +1,8 @@
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
 .appointment__header {
     display: flex;
     justify-content: space-between;
@@ -48,17 +53,33 @@
 
 /* form */
 
+.form {
+    p, h3 {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.form h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #1677ff;
+    color: #434343;
+}
+
 .form-header {
     font-size: 1rem;
     font-weight: 600;
 }
 
-.form__container {
+/* .form__container {
     padding: 0.25rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0 1rem;
-}
+} */
 
 .form-field {
     display: flex;
@@ -66,14 +87,15 @@
     gap: 0.5rem;
 }
 
-/* .form-field > input {
-    --clr-border: #1890ff;
-    border: 1px solid var(--clr-border);
-    padding: 0.25rem 0.5rem;
-} */
-
 .form-btn {
     margin: 1rem 0;
+}
+
+.form-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 
@@ -99,7 +121,8 @@
 
 
 .sx__time-grid-event.sx__event {
-    height: auto !important;
+    min-height: 3rem;
 }
+
 
 

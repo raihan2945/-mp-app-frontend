@@ -33,6 +33,12 @@ function AppointmentCalender() {
         start: '2024-07-16 10:05',
         end: '2024-07-16 10:20',
       },
+      {
+        id: '4',
+        title: 'Event 3',
+        start: '2024-07-16 10:05',
+        end: '2024-07-16 14:20',
+      },
     ],
   })
  
