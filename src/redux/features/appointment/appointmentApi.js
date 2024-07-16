@@ -13,8 +13,8 @@ export const appointmentApi = apiSlice.injectEndpoints({
     }),
     getAllAppointment: builder.query({
       query: ({ start, end }) =>
-        `api/v1/appointment?${
-          start ? "&start=" + start : ""
+        `api/v1/appointment${
+          start ? "?start=" + start : ""
         } ${end ? "&end=" + end : ""}`,
       providesTags: ["appointment"],
     }),
