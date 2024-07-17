@@ -1,3 +1,10 @@
+:root {
+    --clr-border: #f3f4f6;
+    --clr-gray-500: rgb(107 114 128);
+    --clr-gray-50 : rgb(249 250 251);
+}
+
+
 .flex-col {
     display: flex;
     flex-direction: column;
@@ -134,9 +141,9 @@
 
 /* appointment detail */
 
+
+
 .appointment-detail {
-    --clr-border: #f3f4f6;
-    --clr-gray-500: rgb(107 114 128);
 
     * {
         margin: 0;
@@ -214,4 +221,90 @@
 
 .appointment__calender-filter {
     margin-bottom: 1rem;
+}
+
+
+
+/* calender */
+.btn--icon {
+    width: 2rem;
+    padding: 0.25rem;
+    aspect-ratio: 1;
+    cursor: pointer;
+    border-radius: 100%;
+    border: 1px solid transparent;
+    transition: all 300ms;
+}
+
+.btn--icon:hover {
+    border-color: #1677ff;
+    background: white;
+}
+
+.ant-select-selector{
+    font-size: 14px !important;
+}
+
+.ant-btn {
+    font-size: 14px !important;
+}
+
+.calender-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    .left-content {
+        display: flex;
+        align-items: center;
+        gap: 5rem;
+
+        h2 {
+            font-weight: 400;
+            font-size: 18px;
+        }
+
+    }
+
+    .right-content {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+
+    .icons {
+        display: flex;
+        gap: 0.5rem;
+    }
+}
+
+.scheduler {
+    overflow-y: auto;
+}
+
+
+.calender-cells {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(80px, 1fr));
+    text-align: center;
+    border: 1px solid var(--clr-border);
+    width: 100%;
+    &.weekday {
+        padding: 1rem 0;
+        background: var(--clr-gray-50);
+    }
+
+    .calender-cell {
+        padding: 2rem 0;
+        border: 1px solid var(--clr-gray-50);
+        border-top: none;
+        border-left: none;
+        transition: all 500ms;
+
+        &:hover {
+            background: var(--clr-border);
+        }
+    }
 }
