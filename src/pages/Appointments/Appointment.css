@@ -292,19 +292,46 @@
     &.weekday {
         padding: 1rem 0;
         background: var(--clr-gray-50);
+        font-weight: 500;
     }
 
     .calender-cell {
-        padding: 0.5rem;
-        height: 6rem;
+        padding: 0.25rem;
+        height: 7rem;
         border: 1px solid var(--clr-gray-200);
         border-top: none;
         border-left: none;
         transition: all 500ms;
+        overflow: hidden;
         
 
         &:hover {
             background: var(--clr-border);
+        }
+
+        .date {
+            padding: 0.25rem 0;
+        }
+
+        .events {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            height: 4.25rem;
+            overflow: hidden;
+
+            .event {
+                border-radius: 5px;
+                font-size: 12px;
+                background: rgb(153 246 228);
+                color: rgb(17 94 89);
+
+
+                &:nth-child(even) {
+                    background: rgb(186 230 253);
+                    color: rgb(7 89 133);
+                }
+            }
         }
     }
 }
