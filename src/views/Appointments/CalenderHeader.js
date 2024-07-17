@@ -26,6 +26,11 @@ const CalenderHeader = () => {
     setSearchParams(searchParams);
   };
 
+  const handleTodayButton = () => {
+    searchParams.delete("m");
+    setSearchParams(searchParams);
+  }
+
   return (
     <>
       <div className="calender-header">
@@ -47,7 +52,7 @@ const CalenderHeader = () => {
 
         <div className="right-content">
           {/* today button */}
-          <Button>Today</Button>
+          <Button onClick={handleTodayButton}>Today</Button>
 
           <Select
             style={{ width: "100px", fontSize: "14px" }}
