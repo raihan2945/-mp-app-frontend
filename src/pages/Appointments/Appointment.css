@@ -1,7 +1,8 @@
 :root {
     --clr-border: #f3f4f6;
     --clr-gray-500: rgb(107 114 128);
-    --clr-gray-50 : rgb(249 250 251);
+    --clr-gray-50: rgb(249 250 251);
+    --clr-gray-200: rgb(243 244 246);
 }
 
 
@@ -280,9 +281,6 @@
     }
 }
 
-.scheduler {
-    overflow-y: auto;
-}
 
 
 .calender-cells {
@@ -297,11 +295,13 @@
     }
 
     .calender-cell {
-        padding: 2rem 0;
-        border: 1px solid var(--clr-gray-50);
+        padding: 0.5rem;
+        height: 6rem;
+        border: 1px solid var(--clr-gray-200);
         border-top: none;
         border-left: none;
         transition: all 500ms;
+        
 
         &:hover {
             background: var(--clr-border);

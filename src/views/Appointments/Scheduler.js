@@ -1,31 +1,32 @@
-import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { weekdays } from "../../utils/data";
+import { useEffect, useState } from "react";
 
 const Scheduler = () => {
-
-  const [month, setMonth] = useState(new Date())
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  let now = new Date(searchParams.get("m")) || new Date();
   const totalDays = new Date(
-    `${new Date().getFullYear()}-${new Date().getMonth() + 2}-0`,
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0,
   ).getDate();
 
-  const dayList = [];
+  let dayList = [];
 
-  Array.from({ length: totalDays }, (_, i) => i + 1).map((item) => {
-    dayList.push(
-      new Date(
-        `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${item}`,
-      ),
-    );
-  });
+  useEffect(() => {
+    now = new Date(searchParams.get("m"));
+  }, [searchParams]);
 
-  if( dayList[0] !== '') {
-    let day = dayList[0].getDay()
-    for(let i=0; i < day; i++) {
-      dayList.unshift('')
-    }
+  for (let i = 1; i <= totalDays; i++) {
+    dayList.push(new Date(`${now.getFullYear()}-${now.getMonth() + 1}-${i}`));
   }
 
+  if (dayList[0] !== "") {
+    let day = dayList[0].getDay();
+    for (let i = 0; i < day; i++) {
+      dayList.unshift("");
+    }
+  }
 
   return (
     <>
@@ -39,13 +40,16 @@ const Scheduler = () => {
 
         {/* days */}
         <div className="calender-cells">
-          {dayList.map((item, idx) => (
-            item !== '' ? 
-            <div className="calender-cell">{item.getDate()}</div> :
-            <div className="calender-cell"></div>
-          ))}
+          {dayList.map((item, idx) =>
+            item != "" ? (
+              <div className="calender-cell" key={idx}>
+                {item.getDate()}
+              </div>
+            ) : (
+              <div className="calender-cell disabled" key={idx}></div>
+            ),
+          )}
         </div>
-        
       </div>
     </>
   );
