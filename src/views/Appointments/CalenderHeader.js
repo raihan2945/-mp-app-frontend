@@ -1,5 +1,5 @@
 import { Button, Select } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
@@ -31,6 +31,12 @@ const CalenderHeader = () => {
     setSearchParams(searchParams);
   }
 
+  useEffect(() => {
+    if(!searchParams.has('m')) {
+      setCalender(new Date())
+    }
+  }, [searchParams])
+
   return (
     <>
       <div className="calender-header">
@@ -46,7 +52,7 @@ const CalenderHeader = () => {
 
           {/* caleder month */}
           <div className="calender-header__month">
-            <h2>{dayjs(calender).format("MMMM, YYYY")}</h2>
+            <h2>{dayjs(searchParams.has("m") ? new Date(searchParams.get("m")) : new Date()).format("MMMM, YYYY")}</h2>
           </div>
         </div>
 

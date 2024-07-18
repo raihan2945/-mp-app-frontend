@@ -4,6 +4,7 @@
     --clr-gray-50: rgb(249 250 251);
     --clr-gray-200: rgb(243 244 246);
     --clr-gray-700: rgb(51 65 85);
+    --clr-gray-400: rgb(156 163 175);
 }
 
 
@@ -313,6 +314,21 @@
 
         .date {
             padding: 0.25rem 0;
+
+            &.selected {
+                padding: 0.25rem;
+                border-radius: 10rem;
+                background: #1677ff;
+                color: white;
+                width: 2rem;
+                aspect-ratio: 1;
+                margin-left: 50%;
+                transform: translateX(-50%);
+            }
+
+            &.disabled {
+                color: var(--clr-gray-400);
+            }
         }
 
         .events {
