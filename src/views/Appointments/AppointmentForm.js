@@ -161,6 +161,8 @@ const AppointmentForm = ({ closeModal, appointment }) => {
                 showTime
                 format={format}
                 value={startDateTime}
+                minDate={dayjs(new Date())}
+                minuteStep={5}
                 onChange={(value) => {
                   if (value != null) {
                     setStartDateTime(dayjs(value.$d))
@@ -176,6 +178,8 @@ const AppointmentForm = ({ closeModal, appointment }) => {
                 showTime
                 value={endDateTime}
                 format={format}
+                minDate={startDateTime != null ? startDateTime : dayjs(new Date())}
+                minuteStep={5}
                 onChange={(value) => {
                   console.log(value);
                   if (value != null) {
