@@ -3,10 +3,13 @@ import { weekdays } from "../../utils/data";
 import { useGetAllAppointmentQuery } from "../../redux/features/appointment/appointmentApi";
 import dayjs from "dayjs";
 import { dateFormatter } from "../../utils/format";
-import { Popover } from "antd";
+import { Popover, Modal } from "antd";
+import { useState } from "react";
+import EventModalDetails from "./EventModalDetails";
 
 const Scheduler = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [event, setEvent] = useState();
 
   let now = searchParams.has("m")
     ? new Date(searchParams.get("m"))
@@ -79,7 +82,11 @@ const Scheduler = () => {
                         })
                         .slice(0, 2)
                         .map((data) => (
-                          <div className="event" key={data.id}>
+                          <div
+                            className="event"
+                            key={data.id}
+                            onClick={() => setEvent(data)}
+                          >
                             {data.full_name}
                           </div>
                         ))
@@ -90,7 +97,11 @@ const Scheduler = () => {
                           );
                         })
                         .map((data) => (
-                          <div className="event" key={data.id}>
+                          <div
+                            className="event"
+                            key={data.id}
+                            onClick={() => setEvent(data)}
+                          >
                             {data.full_name}
                           </div>
                         ))}
@@ -100,6 +111,8 @@ const Scheduler = () => {
                     data.data.filter((event) => {
                       return dateFormatter(event.start) == dateFormatter(item);
                     }).length > 3 && (
+                      // to show more event in popover
+
                       <Popover
                         content={
                           <div className="event-popover">
@@ -114,7 +127,13 @@ const Scheduler = () => {
                                   );
                                 })
                                 .map((data) => (
-                                  <div className="event" key={data.id}>
+                                  <div
+                                    className="event"
+                                    key={data.id}
+                                    onClick={() => {
+                                      setEvent(data);
+                                    }}
+                                  >
                                     {data.full_name}
                                   </div>
                                 ))}
@@ -141,6 +160,18 @@ const Scheduler = () => {
           )}
         </div>
       </div>
+
+      {/* event details modal */}
+      <Modal
+        open={event}
+        onCancel={() => {
+          setEvent("");
+        }}
+        centered
+        footer={false}
+      >
+        <EventModalDetails eventData={event} />
+      </Modal>
     </>
   );
 };
