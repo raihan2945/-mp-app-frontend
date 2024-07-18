@@ -319,18 +319,87 @@
             gap: 0.25rem;
             height: 4.25rem;
             overflow: hidden;
+            position: relative;
 
             .event {
-                border-radius: 5px;
+                border-radius: 3px;
                 font-size: 12px;
-                background: rgb(153 246 228);
+                background: rgb(204 251 241);
                 color: rgb(17 94 89);
+                border-left: 2px solid rgb(20 184 166);
 
 
                 &:nth-child(even) {
-                    background: rgb(186 230 253);
+                    background: rgb(224 242 254);
                     color: rgb(7 89 133);
+                    border-color: rgb(14 165 233);
                 }
+            }
+
+            .event-more {
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 100%;
+                transform: translateX(-50%);
+                font-size: 12px;
+                font-weight: 500;
+                cursor: pointer;
+            }
+
+        }
+
+    }
+}
+
+.event-popover {
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+
+    h4 {
+        text-align: center;
+        color: var(--clr-gray-500);
+        font-weight: 400;
+    }
+
+    h3 {
+        text-align: center;
+        padding: 0.325rem 0.65rem;
+        font-size: 20px;
+        color: white;
+        background: #1677ff;
+        border-radius: 50rem;
+        width: fit-content;
+    }
+
+    .events {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        width: 100%;
+        margin-top: 1rem;
+
+        .event {
+            border-radius: 3px;
+            padding-left: 1rem;
+            font-size: 12px;
+            background: rgb(204 251 241);
+            color: rgb(17 94 89);
+            border-left: 2px solid rgb(20 184 166);
+
+
+            &:nth-child(even) {
+                background: rgb(224 242 254);
+                color: rgb(7 89 133);
+                border-color: rgb(14 165 233);
             }
         }
     }

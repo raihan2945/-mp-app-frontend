@@ -56,12 +56,11 @@ const CalenderHeader = () => {
 
           <Select
             style={{ width: "100px", fontSize: "14px" }}
-            value={searchParams.get("v")}
+            value={searchParams.has('v') ? searchParams.get("v") : 'm'}
             onChange={(value) => {
               searchParams.set("v", value);
               setSearchParams(searchParams);
             }}
-            defaultValue={"m"}
             size="large"
             placeholder="View"
             suffixIcon={<FaChevronDown />}

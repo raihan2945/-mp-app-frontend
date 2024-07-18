@@ -1,9 +1,9 @@
 import { useSearchParams } from "react-router-dom";
 import { weekdays } from "../../utils/data";
-import { useEffect } from "react";
 import { useGetAllAppointmentQuery } from "../../redux/features/appointment/appointmentApi";
 import dayjs from "dayjs";
 import { dateFormatter } from "../../utils/format";
+import { Popover } from "antd";
 
 const Scheduler = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,7 +12,7 @@ const Scheduler = () => {
     ? new Date(searchParams.get("m"))
     : new Date();
 
-    // fetch data
+  // fetch data
   const { data, isLoading } = useGetAllAppointmentQuery({
     start: dayjs(new Date(now.getFullYear(), now.getMonth(), 0)).format(
       "YYYY-MM-DD",
@@ -22,16 +22,13 @@ const Scheduler = () => {
     ),
   });
 
-
-  
-
   // calender date setup
   const totalDays = new Date(
     now.getFullYear(),
     now.getMonth() + 1,
     0,
   ).getDate();
-  
+
   let dayList = [];
 
   for (let i = 1; i <= totalDays; i++) {
@@ -64,18 +61,78 @@ const Scheduler = () => {
               <div className="calender-cell" key={idx}>
                 <div className="date">{item.getDate()}</div>
                 <div className="events">
+                  {/* show event along with date */}
+                  {/* if event > 3 ->
+                    then show 2 and MORE option
+                    else show all
+                  */}
+
                   {data &&
-                    data.data
-                      .filter((event) => {
-                        return (
-                          dateFormatter(event.start) == dateFormatter(item)
-                        );
-                      })
-                      .map((data) => (
-                        <div className="event" key={data.id}>
-                          {data.full_name}
+                  data.data.filter((event) => {
+                    return dateFormatter(event.start) == dateFormatter(item);
+                  }).length > 3
+                    ? data.data
+                        .filter((event) => {
+                          return (
+                            dateFormatter(event.start) == dateFormatter(item)
+                          );
+                        })
+                        .slice(0, 2)
+                        .map((data) => (
+                          <div className="event" key={data.id}>
+                            {data.full_name}
+                          </div>
+                        ))
+                    : data.data
+                        .filter((event) => {
+                          return (
+                            dateFormatter(event.start) == dateFormatter(item)
+                          );
+                        })
+                        .map((data) => (
+                          <div className="event" key={data.id}>
+                            {data.full_name}
+                          </div>
+                        ))}
+
+                  {/* more event message */}
+                  {data &&
+                    data.data.filter((event) => {
+                      return dateFormatter(event.start) == dateFormatter(item);
+                    }).length > 3 && (
+                      <Popover
+                        content={
+                          <div className="event-popover">
+                            <h4>{dayjs(item).format("ddd").toUpperCase()}</h4>
+                            <h3>{dayjs(item).format("DD")}</h3>
+                            <div className="events">
+                              {data.data
+                                .filter((event) => {
+                                  return (
+                                    dateFormatter(event.start) ==
+                                    dateFormatter(item)
+                                  );
+                                })
+                                .map((data) => (
+                                  <div className="event" key={data.id}>
+                                    {data.full_name}
+                                  </div>
+                                ))}
+                            </div>
+                          </div>
+                        }
+                        trigger={"click"}
+                      >
+                        <div className="event-more">
+                          {data.data.filter((event) => {
+                            return (
+                              dateFormatter(event.start) == dateFormatter(item)
+                            );
+                          }).length - 2}{" "}
+                          more
                         </div>
-                      ))}
+                      </Popover>
+                    )}
                 </div>
               </div>
             ) : (
