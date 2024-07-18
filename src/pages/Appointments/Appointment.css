@@ -462,6 +462,12 @@
             align-items: center;
             gap: 0.5rem;
         }
+
+        p {
+            font-size: 14px;
+            color: var(--clr-gray-700);
+            font-weight: 400;
+        }
     }
 
     .icon.square {
