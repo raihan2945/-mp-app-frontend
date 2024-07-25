@@ -65,6 +65,7 @@ const CalenderHeader = () => {
             value={searchParams.has('v') ? searchParams.get("v") : 'm'}
             onChange={(value) => {
               searchParams.set("v", value);
+              searchParams.delete('m')
               setSearchParams(searchParams);
             }}
             size="large"

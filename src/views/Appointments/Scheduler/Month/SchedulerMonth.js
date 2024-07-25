@@ -1,13 +1,14 @@
 import { useSearchParams } from "react-router-dom";
-import { weekdays } from "../../utils/data";
-import { useGetAllAppointmentQuery } from "../../redux/features/appointment/appointmentApi";
+import { weekdays } from "../../../../utils/data";
+import { useGetAllAppointmentQuery } from "../../../../redux/features/appointment/appointmentApi";
 import dayjs from "dayjs";
-import { dateFormatter } from "../../utils/format";
+import { dateFormatter } from "../../../../utils/format";
 import { Popover, Modal } from "antd";
 import { useEffect, useState } from "react";
-import EventModalDetails from "./EventModalDetails";
+import EventModalDetails from "../EventModalDetails";
+import CalenderHeader from "./CalenderHeader";
 
-const Scheduler = () => {
+const SchedulerMonth = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [event, setEvent] = useState();
 
@@ -74,6 +75,7 @@ const Scheduler = () => {
 
   return (
     <>
+      <CalenderHeader />
       <div className="scheduler">
         {/* weekdays */}
         <div className="calender-cells weekday">
@@ -198,4 +200,4 @@ const Scheduler = () => {
   );
 };
 
-export default Scheduler;
+export default SchedulerMonth;
