@@ -8,7 +8,7 @@ const CalenderHeader = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [datePicker, setDatePicker] = useState(searchParams.has('d') ? dayjs(searchParams.get('d')): dayjs(new Date()));
   const [calender, setCalender] = useState(
-    searchParams.has("m") ? new Date(searchParams.get("m")) : new Date(),
+    searchParams.has("d") ? new Date(searchParams.get("d")) : new Date(),
   );
 
   const handleNextMonth = () => {
@@ -19,6 +19,7 @@ const CalenderHeader = () => {
       now.getDate() + 1,
     );
     setCalender(nextMonth);
+    setDatePicker(dayjs(nextMonth))
     searchParams.set("d", dayjs(nextMonth).format("YYYY-MM-DD"));
     setSearchParams(searchParams);
   };
@@ -31,6 +32,7 @@ const CalenderHeader = () => {
       now.getDate() - 1,
     );
     setCalender(new Date(prevMonth));
+    setDatePicker(dayjs(prevMonth))
     searchParams.set("d", dayjs(prevMonth).format("YYYY-MM-DD"));
     setSearchParams(searchParams);
   };
@@ -69,6 +71,7 @@ const CalenderHeader = () => {
               value={datePicker || dayjs(new Date())}
               onChange={(value) => {
                 setDatePicker(value)
+                setCalender(value.$d)
                 searchParams.set('d', value.format('YYYY-MM-DD'))
                 setSearchParams(searchParams)
               }}
