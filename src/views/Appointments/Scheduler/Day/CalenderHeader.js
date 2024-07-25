@@ -1,8 +1,9 @@
-import { Button, DatePicker, Select } from "antd";
+import { Button, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
+
 
 const CalenderHeader = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -10,9 +11,14 @@ const CalenderHeader = () => {
     searchParams.has("m") ? new Date(searchParams.get("m")) : new Date(),
   );
 
+
   const handleNextMonth = () => {
     var now = calender;
-    let nextMonth = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    let nextMonth = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1,
+    );
     setCalender(nextMonth);
     searchParams.set("d", dayjs(nextMonth).format("YYYY-MM-DD"));
     setSearchParams(searchParams);
@@ -20,7 +26,11 @@ const CalenderHeader = () => {
 
   const handlePrevMonth = () => {
     var now = calender;
-    let prevMonth = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+    let prevMonth = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - 1,
+    );
     setCalender(new Date(prevMonth));
     searchParams.set("d", dayjs(prevMonth).format("YYYY-MM-DD"));
     setSearchParams(searchParams);
@@ -29,13 +39,15 @@ const CalenderHeader = () => {
   const handleTodayButton = () => {
     searchParams.delete("d");
     setSearchParams(searchParams);
-  }
+  };
 
   useEffect(() => {
-    if(!searchParams.has('d')) {
-      setCalender(new Date())
+    if (!searchParams.has("d")) {
+      setCalender(new Date());
     }
-  }, [searchParams])
+  }, [searchParams]);
+
+
 
   return (
     <>
@@ -52,7 +64,13 @@ const CalenderHeader = () => {
 
           {/* caleder month */}
           <div className="calender-header__month">
-            <h2>{dayjs(searchParams.has("d") ? new Date(searchParams.get("d")) : new Date()).format("DD MMMM, YYYY")}</h2>
+            <h2>
+              {dayjs(
+                searchParams.has("d")
+                  ? new Date(searchParams.get("d"))
+                  : new Date(),
+              ).format("DD MMMM, YYYY")}
+            </h2>
           </div>
         </div>
 
@@ -62,10 +80,10 @@ const CalenderHeader = () => {
 
           <Select
             style={{ width: "100px", fontSize: "14px" }}
-            value={searchParams.has('v') ? searchParams.get("v") : 'm'}
+            value={searchParams.has("v") ? searchParams.get("v") : "m"}
             onChange={(value) => {
               searchParams.set("v", value);
-              searchParams.delete('d')
+              searchParams.delete("d");
               setSearchParams(searchParams);
             }}
             size="large"
