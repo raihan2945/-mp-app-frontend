@@ -5,6 +5,12 @@
     --clr-gray-200: rgb(243 244 246);
     --clr-gray-700: rgb(51 65 85);
     --clr-gray-400: rgb(156 163 175);
+    --clr-emerald-100: rgb(209 250 229);
+    --clr-emerald-700: rgb(4 120 87);
+    --clr-blue-100: rgb(219 234 254);
+    --clr-blue-700: rgb(29 78 216);
+    --clr-primary: #1677ff;
+    /* --clr-gray-400: rgb(156 163 175); */
 }
 
 
@@ -477,5 +483,92 @@
         aspect-ratio: 1;
         background: rgb(204 251 241);
         border-radius: 5px;
+    }
+}
+
+
+
+/* scheduler date */
+
+.scheduler__date {
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    padding: 1rem;
+
+
+    h3 {
+        font-weight: 400;
+        width: 2.5rem;
+        text-align: center;
+        font-size: 13px;
+        color: var(--clr-gray-400);
+        letter-spacing: 0.25rem;
+    }
+
+    h2 {
+        width: 2.5rem;
+        text-align: center;
+        margin-bottom: 1rem;
+        font-weight: 500;
+        font-size: 24px;
+        color: var(--clr-gray-500);
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--clr-gray-200);
+
+        &.active {
+            h2 {
+                background: var(--clr-primary);
+                color: white;
+                border-radius: 20rem;
+            }
+        }
+    }
+
+    .container {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 5rem 1fr;
+        justify-content: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--clr-gray-200);
+    }
+
+    .container-cell {
+
+        &.details {
+            padding: 0.25rem;
+            background: var(--clr-emerald-100);
+            border-radius: 6px;
+            color: var(--clr-emerald-700);
+        }
+
+        &.time {
+            color: var(--clr-gray-700);
+
+            p {
+                font-size: 14px;
+                font-weight: 400;
+            }
+        }
+    }
+
+    .container:nth-child(even) {
+        .container-cell {
+
+            &.details {
+                background: var(--clr-blue-100);
+                color: var(--clr-blue-700);
+            }
+        }
     }
 }
