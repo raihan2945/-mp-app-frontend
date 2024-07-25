@@ -6,6 +6,8 @@ import { useGetAllAppointmentQuery } from "../../../../redux/features/appointmen
 import { MdOutlineEventBusy } from "react-icons/md";
 import { FaRegBuilding } from "react-icons/fa";
 
+
+
 const SchedulerDay = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -50,6 +52,7 @@ const SchedulerDay = () => {
               : dayjs(new Date()).format("DD")}
           </h2>
         </div>
+      
 
         {/* day's event container */}
         <div className="date-event">

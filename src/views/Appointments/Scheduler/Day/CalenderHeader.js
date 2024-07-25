@@ -1,16 +1,15 @@
-import { Button, Select } from "antd";
+import { Button, Calendar, DatePicker, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 
-
 const CalenderHeader = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [datePicker, setDatePicker] = useState(searchParams.has('d') ? dayjs(searchParams.get('d')): dayjs(new Date()));
   const [calender, setCalender] = useState(
     searchParams.has("m") ? new Date(searchParams.get("m")) : new Date(),
   );
-
 
   const handleNextMonth = () => {
     var now = calender;
@@ -37,6 +36,7 @@ const CalenderHeader = () => {
   };
 
   const handleTodayButton = () => {
+    setDatePicker(dayjs(new Date()))
     searchParams.delete("d");
     setSearchParams(searchParams);
   };
@@ -46,8 +46,6 @@ const CalenderHeader = () => {
       setCalender(new Date());
     }
   }, [searchParams]);
-
-
 
   return (
     <>
@@ -64,13 +62,18 @@ const CalenderHeader = () => {
 
           {/* caleder month */}
           <div className="calender-header__month">
-            <h2>
-              {dayjs(
-                searchParams.has("d")
-                  ? new Date(searchParams.get("d"))
-                  : new Date(),
-              ).format("DD MMMM, YYYY")}
-            </h2>
+        
+            <DatePicker
+              variant="borderless"
+              suffixIcon={<FaChevronDown size={12} />}
+              value={datePicker || dayjs(new Date())}
+              onChange={(value) => {
+                setDatePicker(value)
+                searchParams.set('d', value.format('YYYY-MM-DD'))
+                setSearchParams(searchParams)
+              }}
+              format={'DD MMMM, YYYY'}
+            />
           </div>
         </div>
 
