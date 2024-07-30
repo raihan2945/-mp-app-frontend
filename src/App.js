@@ -16,6 +16,7 @@ import Contacts from "./pages/Contacts/Contacts";
 import Appointments from "./pages/Appointments/Appointments";
 import AppointmentTable from "./views/Appointments/AppointmentTable";
 import AppointmentCalender from "./views/Appointments/AppointmentCalender";
+import LetterBox from "./pages/LetterBox/LetterBox";
 
 function App() {
   const accessToken = useSelector((state) => state?.auth?.accessToken);
@@ -43,6 +44,7 @@ function App() {
         />
         <Route exact path="/*" element={<PrivateOutlet />}>
           <Route path="dashboard" element={<Contacts />} />
+          <Route path="letter-box" element={<LetterBox />} />
           <Route path="appointments" element={<Appointments />} >
             <Route path="" element={<AppointmentTable />} />
             <Route path="calender" element={<AppointmentCalender />} />
