@@ -1,0 +1,20 @@
+.letter-box .form-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+
+    .form-field:last-child, .form-field:first-child {
+        grid-column: 1 / span 2;
+    }
+
+    .form-field:last-child > textarea {
+        min-height: 8rem;
+        font-size: 14px;
+        padding: 0.25rem;
+        font-weight: 400;
+    }
+
+    .form-field > select {
+        background: white;
+    }
+}

@@ -65,8 +65,9 @@ const DataTable = () => {
         },
         {
             title: "Type",
-            dataIndex: "type",
-            key: "type",
+            dataIndex: "category",
+            key: "category",
+            render: (_, { category }) => (<></>),
           },
         {
           title: "Date",

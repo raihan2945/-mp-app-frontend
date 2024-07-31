@@ -1,37 +1,49 @@
-import { Button } from "antd";
-import React from "react";
+import { Button, Modal } from "antd";
+import React, { useState } from "react";
 import { RiMailSendLine } from "react-icons/ri";
 import { CSVLink } from "react-csv";
 import { IoMdAdd } from "react-icons/io";
 import { Link, useSearchParams } from "react-router-dom";
+import AddForm from "./AddForm";
 
 const LetterHeader = () => {
 
-    const [searchParams, setSearchParams] = useSearchParams()
+  const [open, setOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <>
       <div className="appointment__header">
         <h2>
           <RiMailSendLine className="icon" />
-          <span>Letter Box</span>
+          <span>Complain/Request</span>
         </h2>
 
         <div className="buttons">
-         
-
           <Button
             type="primary"
             size="middle"
             icon={<IoMdAdd size={16} />}
-            // onClick={() => {
-            //   setOpen(true);
-            // }}
+            onClick={() => {
+              setOpen(true);
+            }}
           >
             Add
           </Button>
         </div>
       </div>
+
+      {/* form modal */}
+      <Modal
+        open={open}
+        onCancel={() => setOpen(false)}
+        centered
+        footer={false}
+        width={"70%"}
+      >
+        {/* <AppointmentForm closeModal={() => setOpen(false)} /> */}
+        <AddForm closeModal={() => setOpen(false)} />
+      </Modal>
     </>
   );
 };

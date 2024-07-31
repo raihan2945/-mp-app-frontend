@@ -83,7 +83,7 @@ function Sidenav({ color }) {
             >
               <RiMailSendLine />
             </span>
-            <span className="label">Letter Box</span>
+            <span className="label">Complain/Request</span>
           </NavLink>
         </Menu.Item>
       </Menu>
