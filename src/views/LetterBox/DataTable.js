@@ -5,6 +5,7 @@ import { FiSearch } from "react-icons/fi";
 import { FaChevronDown } from "react-icons/fa";
 import { dateFormatter } from "../../utils/format";
 import { useDebounce } from "../../hooks/useDebounce";
+import { useGetAllLetterQuery } from "../../redux/features/letterBox/letterBoxApi";
 
 
 const {RangePicker} = DatePicker
@@ -14,6 +15,14 @@ const DataTable = () => {
     const [search, setSearch] = useState('')
     const debounceValue = useDebounce(search);
     const [searchParams, setSearchParams] = useSearchParams()
+
+    const {data, isLoading} = useGetAllLetterQuery({
+      page: searchParams.get("p") || 1,
+      limit: searchParams.get("size") || 10,
+      search: searchParams.get("q") || "",
+      start: searchParams.get("start") || "",
+      end: searchParams.get("end") || "",
+    })
 
 
     useEffect(() => {
@@ -27,7 +36,6 @@ const DataTable = () => {
       }, [debounceValue]);
 
 
-    const data = []
 
     const columns = [
         {
@@ -96,7 +104,6 @@ const DataTable = () => {
       ];
 
 
-
   return (
     <>
       {/* data table filters and sorting */}
@@ -152,7 +159,7 @@ const DataTable = () => {
       {/* data table */}
       <div className="appointment__table">
         <Table
-        //   loading={isLoading}
+          loading={isLoading}
           scroll={{ x: true }}
           rowKey={"id"}
           columns={columns}
