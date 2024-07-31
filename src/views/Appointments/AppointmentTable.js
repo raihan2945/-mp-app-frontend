@@ -22,7 +22,7 @@ const AppointmentTable = () => {
   const [editAppointment, setEditAppointment] = useState();
   const [viewAppointment, setViewAppointment] = useState();
 
-  const [deleteAppointment] = useDeleteAppointmentMutation();
+  const [deleteAppointment, {isLoading: isDeleteing}] = useDeleteAppointmentMutation();
 
   const { data, error, isLoading } = useGetAppointmentsQuery({
     page: searchParams.get("p") || 1,
@@ -160,7 +160,7 @@ const AppointmentTable = () => {
       {/* data table */}
       <div className="appointment__table">
         <Table
-          loading={isLoading}
+          loading={isLoading || isDeleteing}
           scroll={{ x: true }}
           rowKey={"id"}
           columns={columns}

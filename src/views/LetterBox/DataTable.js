@@ -1,109 +1,113 @@
 import React, { useEffect, useState } from "react";
-import {Button, DatePicker, Input, Modal, Pagination, Popconfirm, Select, Table} from 'antd';
+import {
+  Button,
+  DatePicker,
+  Input,
+  Modal,
+  Pagination,
+  Popconfirm,
+  Select,
+  Table,
+} from "antd";
 import { useSearchParams } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import { FaChevronDown } from "react-icons/fa";
 import { dateFormatter } from "../../utils/format";
 import { useDebounce } from "../../hooks/useDebounce";
-import { useGetAllLetterQuery } from "../../redux/features/letterBox/letterBoxApi";
+import { useDeleteLetterMutation, useGetLettersQuery } from "../../redux/features/letterBox/letterBoxApi";
 
-
-const {RangePicker} = DatePicker
+const { RangePicker } = DatePicker;
 
 const DataTable = () => {
+  const [search, setSearch] = useState("");
+  const debounceValue = useDebounce(search);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-    const [search, setSearch] = useState('')
-    const debounceValue = useDebounce(search);
-    const [searchParams, setSearchParams] = useSearchParams()
+  const [deleteLetter, {isLoading: isDeleteing}] = useDeleteLetterMutation();
+  const { data, isLoading } = useGetLettersQuery({
+    page: searchParams.get("p") || 1,
+    limit: searchParams.get("size") || 10,
+    search: searchParams.get("q") || "",
+    start: searchParams.get("start") || "",
+    end: searchParams.get("end") || "",
+  });
 
-    const {data, isLoading} = useGetAllLetterQuery({
-      page: searchParams.get("p") || 1,
-      limit: searchParams.get("size") || 10,
-      search: searchParams.get("q") || "",
-      start: searchParams.get("start") || "",
-      end: searchParams.get("end") || "",
-    })
+  useEffect(() => {
+    if (debounceValue.length != 0) {
+      searchParams.set("p", 1);
+      searchParams.set("q", debounceValue);
+    } else {
+      searchParams.delete("q");
+    }
+    setSearchParams(searchParams);
+  }, [debounceValue]);
 
-
-    useEffect(() => {
-        if (debounceValue.length != 0) {
-          searchParams.set("p", 1);
-          searchParams.set("q", debounceValue);
-        } else {
-          searchParams.delete("q");
-        }
-        setSearchParams(searchParams);
-      }, [debounceValue]);
-
-
-
-    const columns = [
-        {
-          title: "ID",
-          dataIndex: "id",
-          key: "id",
-        },
-        {
-          title: "Full Name",
-          dataIndex: "full_name",
-          key: "full_name",
-        },
-        {
-          title: "Mobile",
-          dataIndex: "mobile",
-          key: "mobile",
-        },
-        {
-          title: "Company Name",
-          dataIndex: "company_name",
-          key: "company_name",
-        },
-        {
-          title: "Designation",
-          dataIndex: "designation",
-          key: "designation",
-        },
-        {
-            title: "Type",
-            dataIndex: "category",
-            key: "category",
-            render: (_, { category }) => (<></>),
-          },
-        {
-          title: "Date",
-          dataIndex: "created_at",
-          key: "created_at",
-          render: (_, { created_at }) => `${dateFormatter(created_at)}`,
-        },
-        {
-          title: "Action",
-          key: "action",
-          render: (_, record) => (
-            <div style={{ display: "flex", gap: "10px" }}>
-              <Button onClick={() => {}} size="small">
-                View
-              </Button>
-              <Button
-                // onClick={() => setEditAppointment(record)}
-                type="primary"
-                size="small"
-              >
-                Edit
-              </Button>
-              <Popconfirm
-                title="Delete the task"
-                description="Are you sure to delete this task?"
-                // onConfirm={() => deleteAppointment(record?.id)}
-                okText="Yes"
-                cancelText="No"
-              >
-                <Button danger>Delete</Button>
-              </Popconfirm>
-            </div>
-          ),
-        },
-      ];
-
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Full Name",
+      dataIndex: "full_name",
+      key: "full_name",
+    },
+    {
+      title: "Mobile",
+      dataIndex: "mobile",
+      key: "mobile",
+    },
+    {
+      title: "Company Name",
+      dataIndex: "company_name",
+      key: "company_name",
+    },
+    {
+      title: "Designation",
+      dataIndex: "designation",
+      key: "designation",
+    },
+    {
+      title: "Type",
+      dataIndex: "category",
+      key: "category",
+      render: (_, { category }) => <></>,
+    },
+    {
+      title: "Date",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: (_, { created_at }) => `${dateFormatter(created_at)}`,
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Button onClick={() => {}} size="small">
+            View
+          </Button>
+          <Button
+            // onClick={() => setEditAppointment(record)}
+            type="primary"
+            size="small"
+          >
+            Edit
+          </Button>
+          <Popconfirm
+            title="Delete the task"
+            description="Are you sure to delete this task?"
+            onConfirm={() => deleteLetter(record?.id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger>Delete</Button>
+          </Popconfirm>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -160,7 +164,7 @@ const DataTable = () => {
       {/* data table */}
       <div className="appointment__table">
         <Table
-          loading={isLoading}
+          loading={isLoading || isDeleteing}
           scroll={{ x: true }}
           rowKey={"id"}
           columns={columns}
