@@ -28,7 +28,7 @@ const AppointmentHeader = () => {
     { label: "Designation", key: "designation" },
     { label: "Company Name", key: "company_name" },
     { label: "Company Location", key: "company_location" },
-    { label: "Company Name", key: "company_name" },
+    { label: "Reference", key: "reference" },
     { label: "Date", key: "created_at" },
     { label: "Note", key: "note" },
   ];

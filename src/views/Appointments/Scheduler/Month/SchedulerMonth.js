@@ -11,6 +11,7 @@ import CalenderHeader from "./CalenderHeader";
 const SchedulerMonth = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [event, setEvent] = useState();
+  const [openPop, setOpenPop] = useState(false)
 
   let now = searchParams.has("m")
     ? new Date(searchParams.get("m"))
