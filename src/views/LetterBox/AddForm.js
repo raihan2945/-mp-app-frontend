@@ -22,18 +22,24 @@ const AddForm = ({ closeModal, letter }) => {
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
+    reset
   } = useForm({
     defaultValues: {},
   });
 
   const onSubmit = async (data) => {
-    if (letter) {
-      updateLetter({ id: letter.id, data: data });
-    } else {
-      await createLetter(data);
+    try {
+      if (letter) {
+        updateLetter({ id: letter.id, data: data });
+      } else {
+        await createLetter(data);
+      }
+      reset()
+      closeModal();
+    } catch (error) {
+      console.log(error)
     }
-
-    closeModal();
+    
   };
 
 
@@ -42,7 +48,7 @@ const AddForm = ({ closeModal, letter }) => {
       setValue("full_name", letter.full_name);
       setValue("mobile", letter.mobile);
       setValue("company_name", letter.company_name);
-      setValue("degination", letter.degination);
+      setValue("designation", letter.designation);
       setValue("note", letter.note);
       setValue("category", letter.category);
     }
@@ -51,7 +57,7 @@ const AddForm = ({ closeModal, letter }) => {
   return (
     <>
       <form className="letter-box form" onSubmit={handleSubmit(onSubmit)}>
-        <h3>Add a note</h3>
+        <h3>{letter != null ? 'Update Note': 'Add a note'}</h3>
         <div className="form-container">
           <p className="form-field">
             <label htmlFor="full_name">Full Name</label>
@@ -148,7 +154,7 @@ const AddForm = ({ closeModal, letter }) => {
         </div>
 
         <Button
-          //   loading={isSubmitting || isLoading || isUpdatting}
+            loading={isSubmitting || isLoading || isUpdatting}
           htmlType="submit"
           className="form-btn"
           type="primary"
