@@ -17,12 +17,15 @@ import { dateFormatter } from "../../utils/format";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useDeleteLetterMutation, useGetLettersQuery } from "../../redux/features/letterBox/letterBoxApi";
 import AddForm from "./AddForm";
+import LetterDetails from "./LetterDetails";
+import { titleCase } from "../../utils/titleCase";
 
 const { RangePicker } = DatePicker;
 
 const DataTable = () => {
   const [search, setSearch] = useState("");
   const [editLetter, setEditLetter] = useState()
+  const [viewLetter, setViewLetter] = useState()
   const debounceValue = useDebounce(search);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -76,9 +79,7 @@ const DataTable = () => {
       dataIndex: "category",
       key: "category",
       render: (_, { category }) => (
-        category === 'complain' ?
-        <Tag color="red">{category}</Tag> :
-        <Tag color="green">{category}</Tag>
+        <Tag color={category === 'complain'? "red" : "green"}>{titleCase(category)}</Tag>
       ),
     },
     {
@@ -92,7 +93,7 @@ const DataTable = () => {
       key: "action",
       render: (_, record) => (
         <div style={{ display: "flex", gap: "10px" }}>
-          <Button onClick={() => {}} size="small">
+          <Button onClick={() => {setViewLetter(record)}} size="small">
             View
           </Button>
           <Button
@@ -207,19 +208,19 @@ const DataTable = () => {
         </Modal>
 
         {/* View appointment modal */}
-        {/* <Modal
+        <Modal
           centered
-          open={viewAppointment}
-          onCancel={() => setViewAppointment("")}
+          open={viewLetter}
+          onCancel={() => setViewLetter("")}
           footer={false}
-          width={"70%"}
+          width={"50%"}
         >
-          {viewAppointment ? (
-            <AppointmentDetails data={viewAppointment} />
+          {viewLetter ? (
+            <LetterDetails data={viewLetter} />
           ) : (
             <p>loading...</p>
           )}
-        </Modal>  */}
+        </Modal> 
       </div>
     </>
   );

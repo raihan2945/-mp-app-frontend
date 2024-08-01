@@ -29,6 +29,7 @@ const AppointmentForm = ({ closeModal, appointment }) => {
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
+    reset
   } = useForm({
     defaultValues: {},
   });
@@ -37,13 +38,20 @@ const AppointmentForm = ({ closeModal, appointment }) => {
     data.start = startDateTime?.$d || null
     data.end = endDateTime?.$d || null
 
-    if (appointment) {
-      updateAppointment({ id: appointment.id, data: data });
-    } else {
-      await createAppointment(data);
+    try {
+      if (appointment) {
+        updateAppointment({ id: appointment.id, data: data });
+      } else {
+        await createAppointment(data);
+      }
+  
+      reset()
+      closeModal();
+    } catch (error) {
+      console.log(error)
     }
 
-    closeModal();
+    
   };
 
 
