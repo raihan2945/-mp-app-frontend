@@ -1,11 +1,21 @@
 import { Button, DatePicker } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useCreateLetterMutation } from "../../redux/features/letterBox/letterBoxApi";
+import { useCreateLetterMutation, useUpdateLetterMutation } from "../../redux/features/letterBox/letterBoxApi";
 
-const AddForm = ({ closeModal, appointment }) => {
+const AddForm = ({ closeModal, letter }) => {
   const [createLetter, { isSuccess, isError, isLoading, error }] =
     useCreateLetterMutation();
+
+  const [
+    updateLetter,
+    {
+      isLoading: isUpdatting,
+      isSuccess: isSuccessUpdating,
+      isError: isErrorUpdating,
+      error: errorUpdating,
+    },
+  ] = useUpdateLetterMutation();
 
   const {
     register,
@@ -17,15 +27,26 @@ const AddForm = ({ closeModal, appointment }) => {
   });
 
   const onSubmit = async (data) => {
-    // if (appointment) {
-    //   updateAppointment({ id: appointment.id, data: data });
-    // } else {
-    //   await createAppointment(data);
-    // }
-    await createLetter(data);
+    if (letter) {
+      updateLetter({ id: letter.id, data: data });
+    } else {
+      await createLetter(data);
+    }
 
     closeModal();
   };
+
+
+  useEffect(() => {
+    if (letter) {
+      setValue("full_name", letter.full_name);
+      setValue("mobile", letter.mobile);
+      setValue("company_name", letter.company_name);
+      setValue("degination", letter.degination);
+      setValue("note", letter.note);
+      setValue("category", letter.category);
+    }
+  }, [letter]);
 
   return (
     <>
@@ -97,7 +118,7 @@ const AddForm = ({ closeModal, appointment }) => {
               type="text"
               {...register("category")}
               id="category"
-                {...register("category", {
+              {...register("category", {
                 required: "Select a type",
               })}
               required

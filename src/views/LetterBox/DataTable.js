@@ -8,6 +8,7 @@ import {
   Popconfirm,
   Select,
   Table,
+  Tag,
 } from "antd";
 import { useSearchParams } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
@@ -15,11 +16,13 @@ import { FaChevronDown } from "react-icons/fa";
 import { dateFormatter } from "../../utils/format";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useDeleteLetterMutation, useGetLettersQuery } from "../../redux/features/letterBox/letterBoxApi";
+import AddForm from "./AddForm";
 
 const { RangePicker } = DatePicker;
 
 const DataTable = () => {
   const [search, setSearch] = useState("");
+  const [editLetter, setEditLetter] = useState()
   const debounceValue = useDebounce(search);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -72,7 +75,11 @@ const DataTable = () => {
       title: "Type",
       dataIndex: "category",
       key: "category",
-      render: (_, { category }) => <></>,
+      render: (_, { category }) => (
+        category === 'complain' ?
+        <Tag color="red">{category}</Tag> :
+        <Tag color="green">{category}</Tag>
+      ),
     },
     {
       title: "Date",
@@ -89,7 +96,7 @@ const DataTable = () => {
             View
           </Button>
           <Button
-            // onClick={() => setEditAppointment(record)}
+            onClick={() => setEditLetter(record)}
             type="primary"
             size="small"
           >
@@ -186,19 +193,18 @@ const DataTable = () => {
         </div>
 
         {/* update appointment modal */}
-        {/* <Modal
+        <Modal
           centered
-          open={editAppointment}
-          onCancel={() => setEditAppointment("")}
+          open={editLetter}
+          onCancel={() => setEditLetter("")}
           footer={false}
           width={"70%"}
-          title="Update Appointment"
         >
-          <AppointmentForm
-            appointment={editAppointment}
-            closeModal={() => setEditAppointment("")}
+          <AddForm
+            letter={editLetter}
+            closeModal={() => setEditLetter("")}
           />
-        </Modal> */}
+        </Modal>
 
         {/* View appointment modal */}
         {/* <Modal
