@@ -1,15 +1,10 @@
-// import { useState } from "react";
-
 import {
-  AiOutlineUsergroupAdd,
   AiFillMedicineBox,
-  AiFillShop,
-  AiOutlineCompass,
-  AiOutlineFileText,
-  AiFillFile,
+  AiOutlineSchedule,
 } from "react-icons/ai";
+import { RiMailSendLine } from "react-icons/ri";
 
-import { Menu, Button } from "antd";
+import { Menu } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 
@@ -64,16 +59,31 @@ function Sidenav({ color }) {
         </Menu.Item>
 
         <Menu.Item key="3">
-          <NavLink to="/contacts">
+          <NavLink to="/appointments">
             <span
               className="icon"
               style={{
-                background: page === "doctors" ? color : "",
+                background: page === "appointments" ? color : "",
               }}
             >
-              <AiFillMedicineBox />
+              <AiOutlineSchedule />
             </span>
-            <span className="label">Contacts</span>
+            <span className="label">Appointments</span>
+          </NavLink>
+        </Menu.Item>
+
+
+        <Menu.Item key="3">
+          <NavLink to="/letter-box">
+            <span
+              className="icon"
+              style={{
+                background: page === "letter-box" ? color : "",
+              }}
+            >
+              <RiMailSendLine />
+            </span>
+            <span className="label">Complain/Request</span>
           </NavLink>
         </Menu.Item>
       </Menu>

@@ -116,55 +116,6 @@ const CustomContent = ({ data, checkingContent }) => (
     </Text>
   </View>
 );
-// Your custom component with a <div> and CSS styles
-// const CustomContent = ({ data, checkingContent }) => (
-//   <View style={customStyles.container}>
-//     <Text style={customStyles.heading1}>
-//       {checkingContent?.first_name &&
-//         data.first_name &&
-//         `${data?.first_name} -`}
-//     </Text>
-//     <Text style={customStyles.heading}>
-//       {checkingContent?.last_name && data?.last_name && `${data?.last_name} `}
-//     </Text>
-//     {data?.mobile && checkingContent?.mobile && (
-//       <View
-//         style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
-//       ></View>
-//     )}
-//     <Text style={customStyles.paragraph}>
-//       {checkingContent.mobile &&
-//         data?.mobile &&
-//         `0${data.mobile}`.getDigitBanglaFromEnglish()}
-//     </Text>
-//     <Text style={customStyles.paragraph}>
-//       {checkingContent?.email && data?.email && `${data?.email} `}
-//     </Text>
-//     {checkingContent?.tag && data?.tag && (
-//       <View>
-//         <View
-//           style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
-//         ></View>
-//         <Text style={customStyles.paragraph}>
-//           {checkingContent?.tag && data?.tag && `${data?.tag} `}
-//         </Text>
-//       </View>
-//     )}
-//     {(data?.union || data?.upazila || data?.district || data?.division) && (
-//       <View
-//         style={{ borderTop: "0.5px solid #EFF0F2", margin: "5px 0px" }}
-//       ></View>
-//     )}
-//     <Text style={customStyles.paragraph}>
-//       {checkingContent?.union && data?.union && `${data?.union} ,`}{" "}
-//       {checkingContent?.upazila && data?.upazila && `${data?.upazila} `}
-//     </Text>
-//     <Text style={customStyles.paragraph}>
-//       {checkingContent?.district && data?.district && `${data?.district}`}{" "}
-//       {checkingContent?.division && data?.division && `, ${data?.division} `}
-//     </Text>
-//   </View>
-// );
 
 // PDF Document component with custom page size and multiple pages
 const PDFDocument = ({ dataArray, checkingContent }) => (
@@ -221,7 +172,6 @@ const ContactsView = ({ success, error }) => {
     onChange: onSelectChange,
   };
 
-  // console.log("selected rows are : ", selectedRows);
 
   const [
     DeleteContact,
@@ -702,6 +652,16 @@ const ContactsView = ({ success, error }) => {
         onCancel={() => cancelContactFormModal()}
         width={"70%"}
         footer={null}
+        centered
+        styles={{
+          body: {
+            height: '85vh',
+            paddingInline: '1rem',
+            marginTop: '1.5rem',
+            overflowY: 'auto',
+            overflowX: 'hidden',
+          }
+        }}
       >
         {createContact ? (
           <CreateContactForm
